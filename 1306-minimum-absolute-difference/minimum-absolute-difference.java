@@ -9,8 +9,10 @@ class Solution {
 
         for (int i = 0; i < arr.length - 1; i++) {
             if (arr[i + 1] - arr[i] == minDiff) {
-                List<Integer> temp = List.of(arr[i], arr[i + 1]);
-                al.add(temp);
+                List<Integer> list = new ArrayList<Integer>();
+                list.add(arr[i]);
+                list.add(arr[i+1]);
+                al.add(list);
             }
         }
         return al;
