@@ -13,6 +13,9 @@ class Solution {
             temp[i] += cookies[start];
             helper(cookies, start + 1, k, temp);
             temp[i] -= cookies[start];
+            if (temp[i] == 0) {
+                break;
+            }
         }
     }
 
