@@ -5,8 +5,6 @@ class Solution {
                 return b[1] - a[1];
             return a[0] - b[0];
         });
-        for (int i = 0; i < intervals.length; i++)
-            System.out.println(Arrays.toString(intervals[i]));
         int len = intervals.length;
         int[] prev = intervals[0];
         for (int i = 1; i < intervals.length; i++) {
