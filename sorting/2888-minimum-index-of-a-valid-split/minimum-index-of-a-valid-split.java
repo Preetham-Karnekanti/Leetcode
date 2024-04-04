@@ -1,15 +1,28 @@
 class Solution {
     public int minimumIndex(List<Integer> nums) {
-        HashMap<Integer, Integer> hm = new HashMap<>();
-        int dominant = -1;
-        for (int i : nums) {
-            hm.put(i, hm.getOrDefault(i, 0) + 1);
-            if (hm.get(i) * 2 > nums.size())
-                dominant = i;
-        }
-        int maxCount = hm.get(dominant);
         int n = nums.size();
+        int dominant = -1;
         int count = 0;
+        for (int i = 0; i < n; i++) {
+            if (count == 0) {
+                count = 1;
+                dominant = nums.get(i);
+            } else if (nums.get(i) == dominant) {
+                count += 1;
+            } else {
+                count -= 1;
+            }
+        }
+
+        int maxCount = 0;
+        for (int i = 0; i < n; i++) {
+            if (nums.get(i) == dominant) {
+                maxCount += 1;
+            }
+        }
+        if (maxCount * 2 <= n)
+            return -1;
+        count = 0;
         for (int i = 0; i < nums.size(); i++) {
             if (nums.get(i) == dominant) {
                 count++;
