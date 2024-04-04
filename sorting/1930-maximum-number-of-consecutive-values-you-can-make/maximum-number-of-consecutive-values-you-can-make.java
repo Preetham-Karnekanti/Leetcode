@@ -6,6 +6,7 @@ class Solution {
         for (int coin : coins) {
             if (coin <= maxV)
                 maxV += coin;
+            else break;
         }
         return maxV;
     }
