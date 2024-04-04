@@ -1,32 +1,19 @@
 class Solution {
     public int maximumSum(int[] nums) {
-        int[][] matrix = new int[nums.length][2];
-        int max = -1;
-
-        for (int i = 0; i < nums.length; i++) {
-            matrix[i][0] = nums[i];
-            matrix[i][1] = sumDigit(nums[i]);
+        int maxSum = -1;
+        int [] maxNums = new int [82];
+        for(int num : nums){
+            int digitsSum = 0;
+            int temp = num;
+            while(temp > 0){
+                digitsSum += temp%10;
+                temp = temp/10;
+            }
+            if(maxNums[digitsSum] != 0){
+                maxSum = Math.max(maxSum, num + maxNums[digitsSum]);
+            }
+            maxNums[digitsSum] = Math.max(num, maxNums[digitsSum]);
         }
-
-        Arrays.sort(matrix, (num1, num2) -> {
-            return num2[1] == num1[1] ? num2[0] - num1[0] : num2[1] - num1[1];
-        });
-
-        for (int i = 1; i < nums.length; i++)
-            if (matrix[i][1] == matrix[i - 1][1])
-                max = Math.max(max, matrix[i][0] + matrix[i - 1][0]);
-
-        return max;
-    }
-
-    private int sumDigit(int n) {
-        int sum = 0;
-
-        while (n > 0) {
-            sum += n % 10;
-            n /= 10;
-        }
-
-        return sum;
+        return maxSum;
     }
 }
