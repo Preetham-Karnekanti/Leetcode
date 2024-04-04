@@ -4,7 +4,7 @@ class Solution {
 
         int maxV = 1;
         for (int coin : coins) {
-            if (coin <= maxV)
+            if (maxV >= coin)
                 maxV += coin;
             else break;
         }
