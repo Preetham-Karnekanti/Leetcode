@@ -1,37 +1,29 @@
 class Solution {
     public int minimumRefill(int[] plants, int capacityA, int capacityB) {
-        int i = 0;
-        int j = plants.length - 1;
-        int tempA = capacityA;
-        int tempB = capacityB;
-        int countA = 0;
-        int countB = 0;
-        System.out.println(plants.length);
-        while (i < j) {
-            if (tempA >= plants[i]) {
-                tempA -= plants[i];
-            } else {
-                countA++;
-                tempA = capacityA - plants[i];
+        int refill = 0;
+        int left = 0;
+        int right = plants.length - 1;
+        int temp1 = capacityA;
+        int temp2 = capacityB;
+        while (left < right) {
+            if (temp1 < plants[left]) {
+                refill++;
+                temp1 = capacityA;
             }
-            if (tempB >= plants[j]) {
-                tempB -= plants[j];
-            } else {
-                countB++;
-                tempB = capacityB - plants[j];
+            if (temp2 < plants[right]) {
+                refill++;
+                temp2 = capacityB;
             }
-            i++;
-            j--;
+            temp1 -= plants[left];
+            temp2 -= plants[right];
+            left++;
+            right--;
         }
-        if (i == j) {
-            if (tempA >= tempB) {
-                if (tempA < plants[i])
-                    countA++;
-            } else {
-                if (tempB < plants[i])
-                    countB++;
+        if (left == right) {
+            if (Math.max(temp1, temp2) < plants[left]) {
+                refill++;
             }
         }
-        return countA + countB;
+        return refill;
     }
 }
