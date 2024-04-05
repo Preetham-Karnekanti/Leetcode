@@ -9,9 +9,12 @@ class Solution {
         while (i < n && j < m) {
             int k = str1.charAt(i) - 'a';
             k = (k + 1) % 26 + 'a';
-            if (str1.charAt(i) == str2.charAt(j) || (char) k == str2.charAt(j))
+            if (str1.charAt(i) == str2.charAt(j) || (char) k == str2.charAt(j)){
                 j++;
-            i++;
+                i++;
+            }
+            else
+                i++;
         }
         return j == str2.length();
     }
