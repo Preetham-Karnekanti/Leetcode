@@ -4,8 +4,10 @@ class Solution {
         int j = 0;
         int n = s.length();
         int m = t.length();
+        char[] sc = s.toCharArray();
+        char[] tc = t.toCharArray();
         while (i < n && j < m) {
-            if (s.charAt(i) == t.charAt(j)) {
+            if (sc[i] == tc[j]) {
                 i++;
                 j++;
             } else {
