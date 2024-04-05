@@ -14,13 +14,11 @@ class Solution {
                 countA++;
                 tempA = capacityA - plants[i];
             }
-            if (i < j) {
-                if (tempB >= plants[j]) {
-                    tempB -= plants[j];
-                } else {
-                    countB++;
-                    tempB = capacityB - plants[j];
-                }
+            if (tempB >= plants[j]) {
+                tempB -= plants[j];
+            } else {
+                countB++;
+                tempB = capacityB - plants[j];
             }
             i++;
             j--;
