@@ -21,11 +21,12 @@ class Solution {
     }
 
     public String deleteCharacters(int[] removable, String s, int k) {
+        int m = s.length();
         HashSet<Integer> hs = new HashSet<>();
         for (int i = 0; i < k; i++)
             hs.add(removable[i]);
         StringBuilder sb = new StringBuilder();
-        for (int i = 0; i < s.length(); i++) {
+        for (int i = 0; i < m; i++) {
             if (!hs.contains(i))
                 sb.append(s.charAt(i));
         }
@@ -33,16 +34,18 @@ class Solution {
     }
 
     public boolean isSubsequence(String s, String p) {
-        if (p.length() > s.length())
+        int n = p.length();
+        int m = s.length();
+        if (n > m)
             return false;
         int i = 0;
         int j = 0;
-        while (i < s.length() && j < p.length()) {
+        while (i < m && j < n) {
             if (s.charAt(i) == p.charAt(j)) {
                 j++;
             }
             i++;
         }
-        return j == p.length();
+        return j == n;
     }
 }
