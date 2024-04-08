@@ -9,12 +9,12 @@ class Solution {
         StringBuilder sb = new StringBuilder();
         for (int i = 0; i < n; i++) {
             if (ch[i] == '(') {
-                String key = "";
+                StringBuilder key = new StringBuilder();
                 int j = i + 1;
                 while (j < n && ch[j] != ')')
-                    key += s.charAt(j++);
+                    key.append(ch[j++]);
                 i = j;
-                String value = hm.get(key) == null ? "?" : hm.get(key);
+                String value = hm.get(key.toString()) == null ? "?" : hm.get(key.toString());
                 sb.append(value);
             } else
                 sb.append(ch[i]);
