@@ -29,9 +29,7 @@ class Solution {
 
     public boolean check(int[] curr, int[] map) {
         for (int i = 0; i < 10; i++) {
-            if (map[i] == 0 && curr[i] != 0)
-                return false;
-            if (map[i] != 0 && curr[i] != 0 && curr[i] > map[i])
+            if (curr[i] > map[i])
                 return false;
         }
         return true;
