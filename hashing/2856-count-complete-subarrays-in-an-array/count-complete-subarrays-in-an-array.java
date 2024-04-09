@@ -11,8 +11,6 @@ class Solution {
                 if (h1.size() == hs.size())
                     count++;
             }
-            System.out.println();
-
         }
         return count;
     }
