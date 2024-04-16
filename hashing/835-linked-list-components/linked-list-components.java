@@ -10,8 +10,6 @@
  */
 class Solution {
     public int numComponents(ListNode head, int[] nums) {
-        if(nums.length == 1)
-            return 1;
         HashSet<Integer> hs = new HashSet<>();
         for (int i : nums)
             hs.add(i);
