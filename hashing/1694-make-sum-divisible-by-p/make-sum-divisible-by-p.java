@@ -8,20 +8,22 @@ class Solution {
             return 0;
         if (sum < p)
             return -1;
-        long extra = sum % p;
-        int len = nums.length;
-        sum = 0;
+        long targetRemainder = sum % p;
+        int minLength = nums.length;
+        long currentSum = 0;
         HashMap<Long, Integer> hm = new HashMap<>();
         hm.put(0L, -1);
         for (int i = 0; i < nums.length; i++) {
-            sum += nums[i];
-            long rem = (sum % p + p) % p;
-            hm.put(rem, i);
-            long remToSearch = ((rem - extra) % p + p) % p;
-            if (hm.containsKey(remToSearch)) {
-                len = Math.min(len, i - hm.get(remToSearch));
+           
+            currentSum = (currentSum + nums[i]) % p;
+            long complement = (currentSum - targetRemainder + p) % p;
+            
+            if (hm.containsKey(complement)) {
+                minLength = Math.min(minLength, i - hm.get(complement));
             }
+            
+            hm.put(currentSum, i);
         }
-        return len == nums.length ? -1 : len;
+         return minLength == nums.length ? -1 : minLength;
     }
 }
