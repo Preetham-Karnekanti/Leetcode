@@ -5,17 +5,17 @@ class Solution {
         for (int i = 0; i < s.length(); i++) {
             if (s.charAt(i) == '(') {
                 st.push(s.charAt(i));
-            } else {
-                if (i + 1 < s.length() && s.charAt(i + 1) == ')') {
-                    i++;
-                } else {
-                    count++;
-                }
-                if (!st.isEmpty())
-                    st.pop();
-                else
-                    count++;
+                continue;
             }
+            if (i + 1 < s.length() && s.charAt(i + 1) == ')') {
+                i++;
+            } else {
+                count++;
+            }
+            if (!st.isEmpty())
+                st.pop();
+            else
+                count++;
         }
         return count + st.size() * 2;
     }
