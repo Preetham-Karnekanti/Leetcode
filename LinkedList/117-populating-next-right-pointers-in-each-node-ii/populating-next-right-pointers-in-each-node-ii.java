@@ -30,9 +30,9 @@ class Solution {
         q.add(root);
         while (!q.isEmpty()) {
             int size = q.size();
-            for (int i = 0; i < size; i++) {
+            while (size-- > 0) {
                 Node n = q.poll();
-                if (i < size - 1)
+                if (size > 0)
                     n.next = q.peek();
                 if (n.left != null)
                     q.add(n.left);
