@@ -19,9 +19,9 @@ class Solution {
         int idx = 0;
         while (cur != null) {
             ans[idx++] = cur;
-            int currentLength = partLength - 1 + ((extra-- > 0) ? 1 : 0);
+            int currentLength = partLength + ((extra-- > 0) ? 1 : 0);
 
-            for (i = 0; i < currentLength; i++)
+            for (i = 1; i < currentLength; i++)
                 cur = cur.next;
 
             ListNode temp = cur.next;
