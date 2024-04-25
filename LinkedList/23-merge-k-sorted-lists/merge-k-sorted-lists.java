@@ -10,15 +10,19 @@
  */
 class Solution {
     public ListNode mergeKLists(ListNode[] lists) {
-        if (lists.length == 0)
+        return mergeKLists(lists, 0, lists.length - 1);
+    }
+
+    public ListNode mergeKLists(ListNode[] lists, int lo, int hi) {
+        if (lo > hi)
             return null;
+        if (lo == hi)
+            return lists[lo];
 
-        ListNode ansList = lists[0];
-        for (int i = 1; i < lists.length; i++) {
-            ansList = mergeList(ansList, lists[i]);
-        }
-        return ansList;
-
+        int m = (lo + hi) / 2;
+        ListNode left = mergeKLists(lists, lo, m);
+        ListNode right = mergeKLists(lists, m + 1, hi);
+        return mergeList(left, right);
     }
 
     public ListNode mergeList(ListNode list1, ListNode list2) {
