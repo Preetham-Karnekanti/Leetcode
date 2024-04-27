@@ -19,12 +19,23 @@ class Node {
 
 class Solution {
     public int maxDepth(Node root) {
+        int depth = 0;
         if (root == null)
-            return 0;
-        int max = 0;
-        for (Node n : root.children) {
-            max = Math.max(max, maxDepth(n));
+            return depth;
+        Deque<Node> queue = new ArrayDeque<>();
+        queue.add(root);
+        while (!queue.isEmpty()) {
+            int level_size = queue.size();
+            for (int i = 0; i < level_size; i++) {
+                Node node = queue.poll();
+                if (node.children != null && !node.children.isEmpty()) {
+                    for (Node child : node.children) {
+                        queue.offer(child);
+                    }
+                }
+            }
+            depth += 1;
         }
-        return max + 1;
+        return depth;
     }
 }
