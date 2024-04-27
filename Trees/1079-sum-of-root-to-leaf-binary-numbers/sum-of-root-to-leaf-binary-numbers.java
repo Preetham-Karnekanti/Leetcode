@@ -15,18 +15,17 @@
  */
 class Solution {
     public int sumRootToLeaf(TreeNode root) {
-        return helper(root, "");
+        return helper(root, 0);
     }
 
-    public int helper(TreeNode root, String num) {
-        if(root == null)
+    public int helper(TreeNode root, int num) {
+        if (root == null)
             return 0;
         if (root.left == null && root.right == null) {
-            num += root.val;
-            return Integer.parseInt(num, 2);
+            return 2 * num + root.val;
         }
         int sum = 0;
-        sum += helper(root.left, num + root.val) + helper(root.right, num + root.val);
+        sum += helper(root.left, 2 * num + root.val) + helper(root.right, 2 * num + root.val);
         return sum;
     }
 }
