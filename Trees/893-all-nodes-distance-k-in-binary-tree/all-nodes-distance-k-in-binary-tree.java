@@ -17,7 +17,7 @@ class Solution {
         int distance = 0;
         while (!q.isEmpty()) {
             int size = q.size();
-            if (distance++ == k) {
+            if (distance == k) {
                 break;
             }
             while (size-- > 0) {
@@ -36,6 +36,7 @@ class Solution {
                     visited.add(childToParent.get(cur));
                 }
             }
+            distance++;
         }
         ArrayList<Integer> al = new ArrayList<>();
         while (!q.isEmpty()) {
