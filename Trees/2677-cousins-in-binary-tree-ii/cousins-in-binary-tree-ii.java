@@ -18,11 +18,11 @@ class Solution {
         HashMap<TreeNode, Integer> hm = new HashMap<>();
         Queue<Pair> q = new LinkedList<>();
         q.add(new Pair(root, null));
-        int curLevelChildSum = 0;
+        int nextLevelSum = 0;
         while (!q.isEmpty()) {
             int size = q.size();
-            int prev = curLevelChildSum;
-            curLevelChildSum = 0;
+            int curLevelSum = nextLevelSum;
+            nextLevelSum = 0;
             while (size-- > 0) {
                 Pair currNode = q.poll();
                 TreeNode curr = currNode.curr;
@@ -37,8 +37,8 @@ class Solution {
                     q.add(new Pair(curr.right, curr));
                 }
                 hm.put(curr, childSum);
-                curLevelChildSum += childSum;
-                curr.val = prev - hm.getOrDefault(parent, 0); 
+                nextLevelSum += childSum;
+                curr.val = curLevelSum - hm.getOrDefault(parent, 0); 
             }
         }
         return root;
