@@ -17,16 +17,11 @@ class Solution {
     public TreeNode trimBST(TreeNode root, int low, int high) {
         if (root == null)
             return null;
-        if(root.val < low)
+        if (root.val < low)
             return trimBST(root.right, low, high);
-        if(root.val > high)
+        else if (root.val > high)
             return trimBST(root.left, low, high);
-        if (root.left!=null && root.left.val < low) {
-            root.left = root.left.right;
-        }
-        if (root.right!=null && root.right.val > high) {
-             root.right = root.right.left;
-        }
+
         root.left = trimBST(root.left, low, high);
         root.right = trimBST(root.right, low, high);
         return root;
