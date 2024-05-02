@@ -24,8 +24,8 @@ class Solution {
                 return root.right;
             else if (root.right == null)
                 return root.left;
-            root.val = findMin(root.right);
-            root.right = deleteNode(root.right, root.val);
+            root.val = findMax(root.left);
+            root.left = deleteNode(root.left, root.val);
         }
         if (root.val > key) {
             root.left = deleteNode(root.left, key);
@@ -42,5 +42,12 @@ class Solution {
             root = root.left;
         }
         return val;
+    }
+
+    public int findMax(TreeNode root){
+         while (root != null && root.right!=null) {
+            root = root.right;
+        }
+        return root.val;
     }
 }
