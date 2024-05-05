@@ -15,38 +15,54 @@
  */
 class Solution {
     public List<Integer> getAllElements(TreeNode root1, TreeNode root2) {
-        ArrayList<Integer> al1 = new ArrayList<>();
-        ArrayList<Integer> al2 = new ArrayList<>();
-        inorder(root1, al1);
-        inorder(root2, al2);
-        ArrayList<Integer> ans = new ArrayList<>();
-        merge(ans, al1, al2);
-        return ans;
+        Stack<Pair> st1 = new Stack<>();
+        Stack<Pair> st2 = new Stack<>();
+        ArrayList<Integer> inorder = new ArrayList<>();
+        if (root1 != null)
+            st1.push(new Pair(root1, 1));
+        if (root2 != null)
+            st2.push(new Pair(root2, 1));
+
+        while (st1.size() > 0 || st2.size() > 0) {
+
+            while (!st1.isEmpty() && st1.peek().state != 2)
+                process(st1);
+            while (!st2.isEmpty() && st2.peek().state != 2)
+                process(st2);
+            if (!st1.isEmpty() && (st2.isEmpty() || (st1.peek().node.val < st2.peek().node.val))) {
+                inorder.add(st1.peek().node.val);
+                process(st1);
+            } else if (!st2.isEmpty()) {
+                inorder.add(st2.peek().node.val);
+                process(st2);
+            }
+        }
+
+        return inorder;
     }
 
-    public void merge(List<Integer> ans, List<Integer> al1, List<Integer> al2) {
-        int i = 0;
-        int j = 0;
-        int n = al1.size();
-        int m = al2.size();
-        while (i < n && j < m) {
-            if (al1.get(i) < al2.get(j))
-                ans.add(al1.get(i++));
-            else
-                ans.add(al2.get(j++));
+    public void process(Stack<Pair> st) {
+        Pair cur = st.peek();
+        if (cur.state == 1) {
+            cur.state++;
+            if (cur.node.left != null)
+                st.push(new Pair(cur.node.left, 1));
+        } else if (cur.state == 2) {
+            cur.state++;
+            if (cur.node.right != null)
+                st.push(new Pair(cur.node.right, 1));
+        } else {
+            st.pop();
         }
-        while (i < n)
-            ans.add(al1.get(i++));
-        while (j < m)
-            ans.add(al2.get(j++));
-
     }
+}
 
-    public void inorder(TreeNode root, ArrayList<Integer> al) {
-        if (root != null) {
-            inorder(root.left, al);
-            al.add(root.val);
-            inorder(root.right, al);
-        }
+class Pair {
+    int state;
+    TreeNode node;
+
+    Pair(TreeNode node, int state) {
+        this.state = state;
+        this.node = node;
     }
 }
