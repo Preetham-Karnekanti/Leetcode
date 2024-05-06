@@ -18,23 +18,22 @@ class Solution {
         return hasSum(root, k, root);
     }
 
-    public boolean hasSum(TreeNode root, int k, TreeNode node) {
+    public boolean hasSum(TreeNode node, int k, TreeNode root) {
         if (node == null)
             return false;
         int target = k - node.val;
-        boolean isFound = findNode(root, target, node);
-        if (isFound)
+        if (find(node, target, root))
             return true;
-        return hasSum(root, k, node.left) || hasSum(root, k, node.right);
+        return hasSum(node.left, k, root) || hasSum(node.right, k, root);
     }
 
-    public boolean findNode(TreeNode root, int k, TreeNode node) {
+    public boolean find(TreeNode node, int target, TreeNode root) {
         if (root == null)
             return false;
-        if (root.val == k && root != node)
+        if (root.val == target && root != node)
             return true;
-        if (root.val > k)
-            return findNode(root.left, k, node);
-        return findNode(root.right, k, node);
+        if (root.val > target)
+            return find(node, target, root.left);
+        return find(node, target, root.right);
     }
 }
