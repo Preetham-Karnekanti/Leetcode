@@ -1,5 +1,5 @@
 /**
- * Definition for a binary tree node.
+ * Definition for a binary tree TreeNode.
  * public class TreeNode {
  * int val;
  * TreeNode left;
@@ -8,36 +8,43 @@
  * }
  */
 class Solution {
+    TreeNode startNode;
     public List<Integer> distanceK(TreeNode root, TreeNode target, int k) {
-        HashMap<TreeNode, TreeNode> childToParent = getParents(root);
-        HashSet<TreeNode> visited = new HashSet<>();
+        HashMap<TreeNode, TreeNode> parentsMap = getParents(root, target);
         Queue<TreeNode> q = new LinkedList<>();
-        q.add(target);
-        visited.add(target);
+        q.add(startNode);
+        HashSet<TreeNode> hs = new HashSet<>();
+        hs.add(startNode);
         int distance = 0;
-        while (!q.isEmpty()) {
-            int size = q.size();
-            if (distance == k) {
+        while(!q.isEmpty()){
+            if(distance == k)
                 break;
-            }
-            while (size-- > 0) {
+            int size = q.size();
+            while(size-- >0){
                 TreeNode cur = q.poll();
-                if (cur.left != null && !visited.contains(cur.left)) {
+                if(cur.left != null && !hs.contains(cur.left)){
+                    hs.add(cur.left);
                     q.add(cur.left);
-                    visited.add(cur.left);
                 }
-                if (cur.right != null && !visited.contains(cur.right)) {
+                if(cur.right != null && !hs.contains(cur.right)){
+                    hs.add(cur.right);
                     q.add(cur.right);
-                    visited.add(cur.right);
                 }
-                if (childToParent.containsKey(cur) &&
-                        !visited.contains(childToParent.get(cur))) {
-                    q.add(childToParent.get(cur));
-                    visited.add(childToParent.get(cur));
+                TreeNode parent = parentsMap.get(cur);
+                if(parent!=null && !hs.contains(parent)){
+                    q.add(parent);
+                    hs.add(parent);
                 }
+
             }
             distance++;
         }
+        // int ans[] = new int[q.size()];
+        // int i = 0;
+        // while(!q.isEmpty()){
+        //     ans[i++] = q.poll().data;
+        // }
+        // return ans;
         ArrayList<Integer> al = new ArrayList<>();
         while (!q.isEmpty()) {
             al.add(q.poll().val);
@@ -45,22 +52,23 @@ class Solution {
         return al;
     }
 
-    public HashMap<TreeNode, TreeNode> getParents(TreeNode root) {
+   public   HashMap<TreeNode, TreeNode> getParents(TreeNode root, TreeNode target){
         Queue<TreeNode> q = new LinkedList<>();
         HashMap<TreeNode, TreeNode> hm = new HashMap<>();
         q.add(root);
-        while (!q.isEmpty()) {
+        while(!q.isEmpty()){
             TreeNode cur = q.poll();
-            if (cur.left != null) {
-                q.add(cur.left);
+            if(cur.val == target.val)
+                startNode = cur;
+            if(cur.left != null){
                 hm.put(cur.left, cur);
+                q.add(cur.left);
             }
-            if (cur.right != null) {
-                q.add(cur.right);
+            if(cur.right != null){
                 hm.put(cur.right, cur);
+                q.add(cur.right);
             }
         }
-
         return hm;
     }
 }
