@@ -6,7 +6,7 @@ class Solution {
         while (!q.isEmpty()) {
             List<Integer> path = q.poll();
             if (path.get(path.size() - 1) == graph.length - 1) {
-                ans.add(new ArrayList<>(path));
+                ans.add(path);
             } else {
                 for (int x : graph[path.get(path.size() - 1)]) {
                     List<Integer> newPath = new ArrayList<>(path);
