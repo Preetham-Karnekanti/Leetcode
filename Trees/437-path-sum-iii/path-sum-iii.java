@@ -14,23 +14,24 @@
  * }
  */
 class Solution {
-    int count[] = new int[1];
+    HashMap<Long, Integer> hm;
 
     public int pathSum(TreeNode root, int targetSum) {
-        if (root == null)
-            return 0;
-        helper(root, targetSum, 0, count);
-        pathSum(root.left, targetSum);
-        pathSum(root.right, targetSum);
-        return count[0];
+        hm = new HashMap<>();
+        hm.put(0L, 1);
+        return helper(root, targetSum, 0L);
     }
 
-    public void helper(TreeNode root, int targetSum, long curSum, int[] count) {
+    public int helper(TreeNode root, int targetSum, long curSum) {
         if (root == null)
-            return;
-        if (curSum + root.val == targetSum)
-            count[0]++;
-        helper(root.left, targetSum, curSum + root.val, count);
-        helper(root.right, targetSum, curSum + root.val, count);
+            return 0;
+        curSum += root.val;
+        int count = hm.getOrDefault(curSum - targetSum, 0);
+        hm.put(curSum, hm.getOrDefault(curSum, 0) + 1);
+        count += helper(root.left, targetSum, curSum);
+        count += helper(root.right, targetSum, curSum);
+        hm.put(curSum, hm.get(curSum) - 1);
+        return count;
     }
+
 }
