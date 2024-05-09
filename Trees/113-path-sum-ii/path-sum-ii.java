@@ -25,12 +25,17 @@ class Solution {
     public void helper(TreeNode root, int sum, List<Integer> path) {
         if (root == null)
             return;
-        path.add(root.val);
         if (sum == root.val && root.left == null && root.right == null) {
+            path.add(root.val);
             ans.add(new ArrayList<>(path));
+            path.remove(path.size() - 1);
+            return;
         }
-        helper(root.left, sum - root.val, path);
-        helper(root.right, sum - root.val, path);
+
+        sum -= root.val;
+        path.add(root.val);
+        helper(root.left, sum, path);
+        helper(root.right, sum, path);
         path.remove(path.size() - 1);
     }
 }
