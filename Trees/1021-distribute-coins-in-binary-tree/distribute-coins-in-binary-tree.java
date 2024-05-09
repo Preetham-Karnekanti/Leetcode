@@ -14,11 +14,12 @@
  * }
  */
 class Solution {
-    int numMoves = 0;
+    int count = 0;
 
     public int distributeCoins(TreeNode root) {
+        count = 0;
         helper(root);
-        return numMoves;
+        return count;
     }
 
     public int helper(TreeNode root) {
@@ -26,7 +27,8 @@ class Solution {
             return 0;
         int left = helper(root.left);
         int right = helper(root.right);
-        numMoves += Math.abs(left) + Math.abs(right);
-        return root.val + left + right - 1;
+
+        count += Math.abs(left) + Math.abs(right);
+        return left + right + root.val - 1;
     }
 }
