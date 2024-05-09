@@ -26,7 +26,6 @@ class Solution {
             if (children == 0) {
                 if (p.node == target && p.time <= t)
                     return p.probability;
-                continue;
             }
             for (int child : adj.get(p.node)) {
                 if (!visited[child]) {
