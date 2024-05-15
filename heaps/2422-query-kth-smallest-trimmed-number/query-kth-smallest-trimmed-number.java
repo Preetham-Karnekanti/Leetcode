@@ -1,7 +1,7 @@
 class Solution {
     public int[] smallestTrimmedNumbers(String[] nums, int[][] queries) {
         PriorityQueue<Pair> pq = new PriorityQueue<>(
-                (a, b) -> b.val.equals(a.val) ? b.idx - a.idx : b.val.compareTo(a.val));
+                (a, b) -> a.val.equals(b.val) ? b.idx - a.idx : b.val.compareTo(a.val));
         int ans[] = new int[queries.length];
         for (int i = 0; i < queries.length; i++) {
             int k = queries[i][0];
