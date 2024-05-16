@@ -3,11 +3,7 @@ class Solution {
         int dx[] = new int[] { 1, -1, 0, 0 };
         int dy[] = new int[] { 0, 0, -1, 1 };
         PriorityQueue<int[]> pq = new PriorityQueue<>((a, b) -> {
-            // if (a[0] != b[0])
-                return a[0] - b[0];
-            // if (a[1] != b[1])
-                // return a[1] - b[1];
-            // return a[2] - b[2];
+            return a[0] - b[0];
         });
         int rows = heightMap.length;
         int cols = heightMap[0].length;
@@ -15,7 +11,7 @@ class Solution {
         int minHeight = 0;
         for (int i = 0; i < rows; i++) {
             for (int j = 0; j < cols; j++) {
-                if (i == 0 || j == 0 || i == rows - 1 || j == cols-1) {
+                if (i == 0 || j == 0 || i == rows - 1 || j == cols - 1) {
                     pq.add(new int[] { heightMap[i][j], i, j });
                     vis[i][j] = true;
                 }
