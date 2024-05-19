@@ -1,28 +1,21 @@
-class Solution {
+public class Solution {
     public List<Integer> partitionLabels(String s) {
-        List<Integer> al = new ArrayList<>();
-        int freq[] = new int[26];
-        for (int i = 0; i < s.length(); i++)
-            freq[s.charAt(i) - 'a']++;
-        int left = 0;
-        int freq2[] = new int[26];
-        for (int right = 0; right < s.length(); right++) {
-            freq2[s.charAt(right) - 'a']++;
-            if (hasAll(freq, freq2, left, right, s)) {
-                al.add(right - left + 1);
-                left = right;
-                left++;
+        int[] hashh = new int[26];
+        
+        for (int i = s.length() - 1; i > 0; --i)
+            hashh[s.charAt(i) - 'a'] = Math.max(i, hashh[s.charAt(i) - 'a']);
+        
+        int hi = 0, sz = 0;
+        List<Integer> ans = new ArrayList<>();
+
+        for (int i = 0; i < s.length(); ++i) {
+            ++sz;
+            hi = Math.max(hi, hashh[s.charAt(i) - 'a']);
+            if (i == hi) {
+                ans.add(sz);
+                sz = 0;
             }
         }
-        return al;
-    }
-
-    public boolean hasAll(int freq[], int freq2[], int left, int right, String s) {
-        while (left <= right) {
-            if (freq[s.charAt(left) - 'a'] != freq2[s.charAt(left) - 'a'])
-                return false;
-            left++;
-        }
-        return true;
+        return ans;
     }
 }
