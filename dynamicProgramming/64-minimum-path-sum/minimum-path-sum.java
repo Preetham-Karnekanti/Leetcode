@@ -9,16 +9,14 @@ class Solution {
     }
 
     public int helper(int[][] grid, int i, int j) {
+        if (i >= grid.length || j >= grid[0].length)
+            return (int) 1e7;
         if (i == grid.length - 1 && j == grid[0].length - 1)
             return grid[i][j];
         if (dp[i][j] != -1)
             return dp[i][j];
         int right = (int) 1e7;
         int down = (int) 1e7;
-        if (i + 1 <= grid.length - 1)
-            right = helper(grid, i + 1, j);
-        if (j + 1 <= grid[0].length - 1)
-            down = helper(grid, i, j + 1);
-        return dp[i][j] = Math.min(right, down) + grid[i][j];
+        return dp[i][j] = Math.min(helper(grid, i + 1, j), helper(grid, i, j + 1)) + grid[i][j];
     }
 }
