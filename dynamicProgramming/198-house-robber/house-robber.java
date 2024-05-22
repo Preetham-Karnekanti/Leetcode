@@ -4,7 +4,7 @@ class Solution {
     public int rob(int[] nums) {
         dp = new int[nums.length];
         Arrays.fill(dp, -1);
-        return Math.max(helper(nums, 0), helper(nums, 1));
+        return helper(nums, 0);
     }
 
     public int helper(int nums[], int idx) {
