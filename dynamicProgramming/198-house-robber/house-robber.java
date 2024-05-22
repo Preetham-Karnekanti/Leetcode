@@ -7,8 +7,8 @@ class Solution {
         dp = new int[nums.length + 1];
         int prev1 = 0;
         int prev = nums[0];
-        for (int i = 2; i <= nums.length; i++) {
-            int cur = Math.max(prev, prev1 + nums[i - 1]);
+        for (int i = 1; i < nums.length; i++) {
+            int cur = Math.max(prev, prev1 + nums[i]);
             prev1 = prev;
             prev = cur;
         }
