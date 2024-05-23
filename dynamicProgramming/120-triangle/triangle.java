@@ -11,9 +11,6 @@ class Solution {
                 dp[i][j] = Math.min(dp[i + 1][j], dp[i + 1][j + 1]) + triangle.get(i).get(j);
             }
         }
-        for (int i = 0; i < dp.length; i++) {
-            System.out.println(Arrays.toString(dp[i]));
-        }
         return dp[0][0];
     }
 
