@@ -1,28 +1,31 @@
 class Solution {
-    int dp[][];
+    int dp[];
 
     public int minFallingPathSum(int[][] matrix) {
         int min = Integer.MAX_VALUE;
         int n = matrix.length;
         int m = matrix[0].length;
-        dp = new int[n][m];
+        int[] prev = new int[m];
         for (int i = 0; i < m; i++)
-            dp[0][i] = matrix[0][i];
+            prev[i] = matrix[0][i];
         for (int i = 1; i < n; i++) {
+            int[] cur = new int[m];
             for (int j = 0; j < m; j++) {
-                int one = (int) 1e9;
-                int two = (int) 1e9;
-                int three = (int) 1e9;
-                one = matrix[i][j] + dp[i - 1][j];
+                int one = (int) 1e7;
+                int two = (int) 1e7;
+                int three = (int) 1e7;
+                one = matrix[i][j] + prev[j];
                 if (j - 1 >= 0)
-                    two = matrix[i][j] + dp[i - 1][j - 1];
+                    two = matrix[i][j] + prev[j - 1];
                 if (j + 1 < m)
-                    three = matrix[i][j] + dp[i - 1][j + 1];
-                dp[i][j] = Math.min(one, Math.min(two, three));
+                    three = matrix[i][j] + prev[j + 1];
+                cur[j] = Math.min(one, Math.min(two, three));
             }
+            prev = cur;
         }
+        System.out.println(Arrays.toString(prev));
         for (int i = 0; i < m; i++)
-            min = Math.min(min, dp[n - 1][i]);
+            min = Math.min(min, prev[i]);
         return min;
     }
 
