@@ -3,15 +3,17 @@ class Solution {
 
     public int minimumTotal(List<List<Integer>> triangle) {
         int n = triangle.size();
-        dp = new int[n][triangle.get(n - 1).size()];
-        for (int i = 0; i < dp[0].length; i++)
-            dp[n - 1][i] = triangle.get(n - 1).get(i);
+        int[] front = new int[n];
+        for (int i = 0; i < n; i++)
+            front[i] = triangle.get(n - 1).get(i);
         for (int i = n - 2; i >= 0; i--) {
+            int[] cur = new int[i + 1];
             for (int j = i; j >= 0; j--) {
-                dp[i][j] = Math.min(dp[i + 1][j], dp[i + 1][j + 1]) + triangle.get(i).get(j);
+                cur[j] = Math.min(front[j], front[j + 1]) + triangle.get(i).get(j);
             }
+            front = cur;
         }
-        return dp[0][0];
+        return front[0];
     }
 
     public int helper(List<List<Integer>> al, int i, int j) {
