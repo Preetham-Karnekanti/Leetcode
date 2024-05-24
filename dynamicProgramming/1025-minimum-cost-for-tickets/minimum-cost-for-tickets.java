@@ -1,29 +1,39 @@
 class Solution {
-    int dp[];
-
     public int mincostTickets(int[] days, int[] costs) {
-        dp = new int[366];
+        int[] dp = new int[days.length + 1];
         Arrays.fill(dp, -1);
-        HashSet<Integer> hs = new HashSet<>();
-        for (int i : days)
-            hs.add(i);
-        return helper(costs, 1, hs);
+        return solve(0, costs, days, dp);
     }
 
-    public int helper(int[] costs, int curr, HashSet<Integer> hs) {
-        if (curr > 365)
+    int solve(int index, int[] costs, int[] days, int[] dp) {
+        if (index >= days.length)
             return 0;
-        if (dp[curr] != -1)
-            return dp[curr];
-        int cost = (int) 1e9;
-        if (!hs.contains(curr)) {
-            return helper(costs, curr + 1, hs);
-        } else {
-            int one = costs[0] + helper(costs, curr + 1, hs);
-            int two = costs[1] + helper(costs, curr + 7, hs);
-            int three = costs[2] + helper(costs, curr + 30, hs);
-            cost = Math.min(Math.min(cost, one), Math.min(two, three));
+        if (dp[index] != -1)
+            return dp[index];
+        // Oneday Pass
+
+        int one = costs[0] + solve(index + 1, costs, days, dp);
+
+        // Seven Day
+        int sevenEndDay = days[index] + 7 - 1;
+        int sevenEndIndex = index + 1;
+        for (; sevenEndIndex < days.length; sevenEndIndex++) {
+            if (days[sevenEndIndex] > sevenEndDay) {
+                break;
+            }
         }
-        return dp[curr] = cost;
+        int seven = costs[1] + solve(sevenEndIndex, costs, days, dp);
+
+        int endDay = days[index] + 30 - 1;
+        int endIndex = index + 1;
+        for (; endIndex < days.length; endIndex++) {
+            if (days[endIndex] > endDay) {
+                break;
+            }
+        }
+        int thirty = costs[2] + solve(endIndex, costs, days, dp);
+
+        return dp[index] = Math.min(one, Math.min(thirty, seven));
+
     }
 }
