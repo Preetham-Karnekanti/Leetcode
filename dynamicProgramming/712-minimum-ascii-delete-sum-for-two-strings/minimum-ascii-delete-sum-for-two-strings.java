@@ -23,9 +23,9 @@ class Solution {
         }
         if (dp[i][j] != -1)
             return dp[i][j];
-        if (s1.charAt(i) == s2.charAt(j))
-            return helper(s1, s2, i + 1, j + 1);
         int cost = (int) 1e9;
+        if (s1.charAt(i) == s2.charAt(j))
+            cost = helper(s1, s2, i + 1, j + 1);
         int one = getAscii(s1.charAt(i)) + helper(s1, s2, i + 1, j);
         int two = getAscii(s2.charAt(j)) + helper(s1, s2, i, j + 1);
         cost = Math.min(cost, Math.min(one, two));
