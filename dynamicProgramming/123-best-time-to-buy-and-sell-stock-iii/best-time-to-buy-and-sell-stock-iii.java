@@ -2,12 +2,24 @@ class Solution {
     int dp[][][];
 
     public int maxProfit(int[] prices) {
-        dp = new int[prices.length][3][2];
-        for (int i[][] : dp) {
-            for (int j[] : i)
-                Arrays.fill(j, -1);
+        int n = prices.length;
+        dp = new int[prices.length + 1][2][3];
+        for (int idx = n - 1; idx >= 0; idx--) {
+            for (int buy = 0; buy <= 1; buy++) {
+                for (int remainingTransactions = 1; remainingTransactions <= 2; remainingTransactions++) {
+                    if (buy == 1) {
+                        int b = -prices[idx] + dp[idx + 1][0][remainingTransactions];
+                        int skip = dp[idx + 1][1][remainingTransactions];
+                        dp[idx][buy][remainingTransactions] = Math.max(b, skip);
+                    } else {
+                        int sell = prices[idx] + dp[idx + 1][1][remainingTransactions - 1];
+                        int skip = dp[idx + 1][0][remainingTransactions];
+                        dp[idx][buy][remainingTransactions] = Math.max(sell, skip);
+                    }
+                }
+            }
         }
-        return helper(prices, 2, 0, 1);
+        return dp[0][1][2];
     }
 
     public int helper(int[] prices, int remainingTransactions, int idx, int buy) {
