@@ -1,7 +1,6 @@
 class Solution {
     public int longestStrChain(String[] words) {
         Arrays.sort(words, (a, b) -> a.length() - b.length());
-        System.out.println(Arrays.toString(words));
         int dp[] = new int[words.length];
         int max = 0;
         Arrays.fill(dp, 1);
