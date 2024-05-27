@@ -12,7 +12,6 @@ class Solution {
             }
             max = Math.max(max, dp[i]);
         }
-        System.out.println(Arrays.toString(dp));
         return max;
     }
 
