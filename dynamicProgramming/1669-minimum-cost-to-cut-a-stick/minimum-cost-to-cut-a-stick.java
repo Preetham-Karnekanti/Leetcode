@@ -8,11 +8,11 @@ class Solution {
             cost[i + 1] = cuts[i];
         cost[0] = 0;
         cost[len + 1] = n;
-        dp = new int[cost.length][cost.length];
+        dp = new int[cuts.length + 1][cuts.length + 1];
         for (int i[] : dp)
             Arrays.fill(i, -1);
         Arrays.sort(cost);
-        return helper(cost, 1, cost.length - 2);
+        return helper(cost, 1, cuts.length);
     }
 
     public int helper(int[] cuts, int i, int j) {
