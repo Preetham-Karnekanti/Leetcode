@@ -2,9 +2,11 @@ class Solution {
     int dp[][];
 
     public int minimumTotal(List<List<Integer>> triangle) {
-        dp = new int[triangle.size()][triangle.size()];
-        for (int i[] : dp)
-            Arrays.fill(i, -1);
+        dp = new int[triangle.size() + 1][triangle.size() + 1];
+        for (int i = triangle.size() - 1; i >= 0; i--) {
+            for (int j = i; j >= 0; j--)
+                dp[i][j] = triangle.get(i).get(j) + Math.min(dp[i + 1][j], dp[i + 1][j + 1]);
+        }
         return helper(triangle, 0, 0);
     }
 
