@@ -7,7 +7,7 @@ class Solution {
             for (int j = i; j >= 0; j--)
                 dp[i][j] = triangle.get(i).get(j) + Math.min(dp[i + 1][j], dp[i + 1][j + 1]);
         }
-        return helper(triangle, 0, 0);
+        return dp[0][0];
     }
 
     public int helper(List<List<Integer>> triangle, int i, int j) {
