@@ -3,20 +3,20 @@ class Solution {
 
     public int maxSumAfterPartitioning(int[] arr, int k) {
         dp = new int[arr.length];
-        return helper(arr, 0, k);
+        Arrays.fill(dp, -1);
+        return helper(arr, k, 0);
     }
 
-    public int helper(int[] arr, int idx, int k) {
-        if (idx == arr.length) {
+    public int helper(int[] arr, int k, int i) {
+        if (i == arr.length)
             return 0;
-        }
-        if (dp[idx] != 0)
-            return dp[idx];
+        if (dp[i] != -1)
+            return dp[i];
         int max = 0, res = 0;
-        for (int i = idx; i < idx + k && i < arr.length; i++) {
-            max = Math.max(max, arr[i]);
-            res = Math.max(res, helper(arr, i + 1, k) + (i - idx + 1) * max);
+        for (int j = i; j < arr.length && j < i + k; j++) {
+            max = Math.max(max, arr[j]);
+            res = Math.max(res, (j - i + 1) * max + helper(arr, k, j + 1));
         }
-        return dp[idx] = res;
+        return dp[i] = res;
     }
 }
