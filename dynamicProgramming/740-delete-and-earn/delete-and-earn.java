@@ -6,12 +6,16 @@ class Solution {
         for (int i : nums) {
             max = Math.max(max, i);
         }
-        dp = new int[max + 1];
-        Arrays.fill(dp, -1);
+        dp = new int[max + 3];
         int freq[] = new int[max + 1];
         for (int i : nums)
             freq[i]++;
-        return helper(freq, 1);
+        for (int idx = freq.length - 1; idx >= 0; idx--) {
+            int notTake = dp[idx + 1];
+            int take = freq[idx] * idx + dp[idx + 2];
+            dp[idx] = Math.max(take, notTake);
+        }
+        return dp[1];
     }
 
     public int helper(int[] freq, int idx) {
