@@ -1,36 +1,33 @@
 class Solution {
-    Boolean dp[][];
+    int n;
+    Boolean[][] memo;
 
     public boolean canCross(int[] stones) {
-        dp = new Boolean[stones.length][stones.length];
-        return helper(stones, 0, 1);
+        n = stones.length;
+        if (stones[1] != 1) {
+            return false;
+        }
+        memo = new Boolean[2001][2001];
+        return helper(1, 1, stones);
     }
 
-    public boolean helper(int stones[], int idx, int jump) {
-        if (idx >= stones.length)
-            return false;
-        if (idx == stones.length - 1)
+    boolean helper(int idx, int prevUnit, int[] stones) {
+        if (idx == n - 1) {
             return true;
-        if (dp[idx][jump] != null)
-            return dp[idx][jump];
-        boolean res = false;
-        
-        if (idx == 0) {
-            if (stones[idx + 1] - stones[idx] == 1)
-                res = res | helper(stones, idx + 1, 1);
-            return res;
         }
-        for (int i = idx + 1; i < stones.length; i++) {
-            if (stones[i] - stones[idx] > jump + 1)
-                break;
-            if (stones[i] - stones[idx] == jump - 1)
-                res = res || helper(stones, i, jump - 1);
-            if (stones[i] - stones[idx] == jump)
-                res = res || helper(stones, i, jump);
-            if (stones[i] - stones[idx] == jump + 1)
-                res = res || helper(stones, i, jump + 1);
+        if (memo[idx][prevUnit] != null) {
+            return memo[idx][prevUnit];
         }
-
-        return dp[idx][jump] = res;
+        boolean ans = false;
+        for (int nextJump = prevUnit - 1; nextJump <= prevUnit + 1 && !ans; nextJump++) {
+            if (nextJump > 0) {
+                int nextStone = stones[idx] + nextJump;
+                int nextIdx = Arrays.binarySearch(stones, idx, stones.length, nextStone);
+                if (nextIdx > -1) {
+                    ans = ans || helper(nextIdx, nextJump, stones);
+                }
+            }
+        }
+        return memo[idx][prevUnit] = ans;
     }
 }
