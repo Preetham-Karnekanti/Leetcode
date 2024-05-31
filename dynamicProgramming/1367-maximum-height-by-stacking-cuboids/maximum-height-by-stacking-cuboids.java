@@ -10,8 +10,6 @@ class Solution {
         Arrays.sort(cuboids, (a, b) -> {
             return b[0] * b[1] * b[2] - a[0] * a[1] * a[2];
         });
-        for (int i = 0; i < cuboids.length; i++)
-            System.out.println(Arrays.toString(cuboids[i]));
         return helper(cuboids, 0, -1);
     }
 
