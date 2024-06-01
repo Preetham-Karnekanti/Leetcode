@@ -11,10 +11,10 @@ class Solution {
     public int helper(int[][] grid, int i, int j) {
         if (i >= grid.length || j >= grid[0].length || grid[i][j] == 1)
             return 0;
-        if (dp[i][j] != -1)
-            return dp[i][j];
         if (i == grid.length - 1 && j == grid[0].length - 1)
             return 1;
+        if (dp[i][j] != -1)
+            return dp[i][j];
         return dp[i][j] = helper(grid, i + 1, j) + helper(grid, i, j + 1);
     }
 }
