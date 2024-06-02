@@ -1,24 +1,34 @@
 class Solution {
-    Integer dp[][];
-
     public int splitArray(int[] nums, int k) {
-        dp = new Integer[nums.length][k + 1];
-        return helper(nums, k, 0);
+        int low = 0;
+        int high = 0;
+        for (int i : nums) {
+            high += i;
+            low = Math.max(low, i);
+        }
+        int ans = 0;
+        while (low <= high) {
+            int sum = (low + high) / 2;
+            if (isPossibleToPartition(sum, nums, k)) {
+                ans = sum;
+                high = sum - 1;
+            } else
+                low = sum + 1;
+        }
+        return ans;
     }
 
-    public int helper(int[] nums, int k, int idx) {
-        if (k == 0 && idx == nums.length)
-            return 0;
-        if (idx == nums.length || k == 0)
-            return (int) 1e9;
-        if (dp[idx][k] != null)
-            return dp[idx][k];
-        int sum = 0, res = (int) 1e9;
-        for (int i = idx; i < nums.length; i++) {
-            sum = sum + nums[i];
-            int nextsum = helper(nums, k - 1, i + 1);
-            res = Math.min(res, Math.max(sum, nextsum));
+    public boolean isPossibleToPartition(int sum, int[] nums, int k) {
+        int partitions = 1;
+        int sumSoFar = 0;
+        for (int i = 0; i < nums.length; i++) {
+            if (sumSoFar + nums[i] <= sum) {
+                sumSoFar += nums[i];
+            } else {
+                sumSoFar = nums[i];
+                partitions++;
+            }
         }
-        return dp[idx][k] = res;
+        return partitions <= k;
     }
 }
