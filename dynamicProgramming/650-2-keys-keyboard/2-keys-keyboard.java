@@ -25,7 +25,7 @@ class Solution {
         if (copy == 0) {
             // pasteCount = curr number of A's
             // copy = 1 refers, we can perform paste
-            return 1 + helper(n, i, 1, i);
+            return dp[i][pasteCount][copy] = 1 + helper(n, i, 1, i);
         }
         // Copy = 1
         // choose to paste and retain copy state so that we paste again in future
