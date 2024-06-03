@@ -20,15 +20,15 @@ class Solution {
         if (prev == 'a') {
             count = helper(n - 1, 'e');
         }
-        if (prev == 'e') {
+        else if (prev == 'e') {
             count = helper(n - 1, 'a') + helper(n - 1, 'i');
         }
-        if (prev == 'i')
+        else if (prev == 'i')
             count = helper(n - 1, 'a') + helper(n - 1, 'e') + helper(n - 1, 'o')
                     + helper(n - 1, 'u');
-        if (prev == 'o')
+        else if (prev == 'o')
             count = helper(n - 1, 'i') + helper(n - 1, 'u');
-        if (prev == 'u')
+        else if (prev == 'u')
             count = helper(n - 1, 'a');
         return  dp[n][prev - 'a'] = count % mod;
     }
