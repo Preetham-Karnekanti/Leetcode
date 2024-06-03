@@ -1,35 +1,15 @@
 class Solution {
-    Long dp[][];
-    int mod = (int) 1e9 + 7;
-
     public int countVowelPermutation(int n) {
-        dp = new Long[n + 1][26];
-        return (int) ((helper(n - 1, 'a')
-                + helper(n - 1, 'e')
-                + helper(n - 1, 'i')
-                + helper(n - 1, 'o')
-                + helper(n - 1, 'u')) % mod);
-    }
-
-    public long helper(int n, char prev) {
-        if (n == 0)
-            return 1;
-        long count = 0;
-        if (dp[n][prev - 'a'] != null)
-            return dp[n][prev - 'a'];
-        if (prev == 'a') {
-            count = helper(n - 1, 'e');
+        long mod = 1_000_000_000 + 7;
+        long a = 1, e = 1, i = 1, o = 1, u = 1;
+        for (int pos = n - 1; pos >= 1; --pos) {
+            long na = a, ne = e, ni = i, no = o, nu = u;
+            a = ne;
+            e = (na + ni) % mod;
+            i = (na + ne + no + nu) % mod;
+            o = (ni + nu) % mod;
+            u = na;
         }
-        else if (prev == 'e') {
-            count = helper(n - 1, 'a') + helper(n - 1, 'i');
-        }
-        else if (prev == 'i')
-            count = helper(n - 1, 'a') + helper(n - 1, 'e') + helper(n - 1, 'o')
-                    + helper(n - 1, 'u');
-        else if (prev == 'o')
-            count = helper(n - 1, 'i') + helper(n - 1, 'u');
-        else if (prev == 'u')
-            count = helper(n - 1, 'a');
-        return  dp[n][prev - 'a'] = count % mod;
+        return (int) ((a + e + i + o + u) % mod);
     }
 }
