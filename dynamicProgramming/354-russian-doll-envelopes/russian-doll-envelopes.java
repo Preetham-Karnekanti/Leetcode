@@ -5,16 +5,16 @@ class Solution {
                 return b[1] - a[1];
             return a[0] - b[0];
         });
-        int dp[] = new int[envelopes.length];
+        int dp[] = new int[envelopes.length + 1];
         int len = 0;
         for (int i = 0; i < envelopes.length; i++) {
-            int index = Arrays.binarySearch(dp, 0, len, envelopes[i][1]);
-            if (index < 0)
-                index = -(index + 1);
-            dp[index] = envelopes[i][1];
-            if (index == len)
+            int ind = Arrays.binarySearch(dp, 0, len, envelopes[i][1]);
+            if (ind < 0)
+                ind = -(ind + 1);
+            dp[ind] = envelopes[i][1];
+            if (len == ind)
                 len++;
         }
-        return len;
+        return len++;
     }
 }
