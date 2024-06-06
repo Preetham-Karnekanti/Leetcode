@@ -12,16 +12,16 @@ class Solution {
         if (dp[idx][diff + 501] != null)
             return dp[idx][diff + 501];
         int res = 1;
-
+        int take = 0;
+        int notTake = 0;
         if (diff == -501) {
             for (int j = idx + 1; j < nums.length; j++) {
-                int take = 1 + helper(nums, j, nums[j] - nums[idx]);
-                int notTake = helper(nums, j, diff);
+                take = 1 + helper(nums, j, nums[j] - nums[idx]);
+                notTake = helper(nums, j, diff);
                 res = Math.max(res, Math.max(take, notTake));
             }
         } else {
             for (int j = idx + 1; j < nums.length; j++) {
-                int take = 0;
                 if (diff == nums[j] - nums[idx])
                     take = 1 + helper(nums, j, nums[j] - nums[idx]);
                 res = Math.max(res, take);
