@@ -26,7 +26,7 @@ class Solution {
                     q.add(ngh);
             }
         }
-        if (i != n || i == 0)
+        if (i != n)
             return new int[0];
         return topo;
     }
