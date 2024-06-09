@@ -20,10 +20,10 @@ class Solution {
                 int nc = c + dy[i];
                 if (!isValid(nr, nc, rows, cols))
                     continue;
-                int newEffort = Math.max(Math.abs(heights[r][c] - heights[nr][nc]), distance);
-                if (newEffort < dist[nr][nc]) {
-                    dist[nr][nc] = newEffort;
-                    q.add(new int[] { newEffort, nr, nc });
+                int diff = Math.max(Math.abs(heights[r][c] - heights[nr][nc]), distance);
+                if (dist[nr][nc] > diff) {
+                    dist[nr][nc] = diff;
+                    q.add(new int[] { diff, nr, nc });
                 }
             }
         }
