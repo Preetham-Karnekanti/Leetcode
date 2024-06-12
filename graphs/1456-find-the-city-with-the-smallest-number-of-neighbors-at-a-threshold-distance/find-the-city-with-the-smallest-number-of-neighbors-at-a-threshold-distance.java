@@ -23,8 +23,7 @@ class Solution {
         }
         int minNodes = Integer.MAX_VALUE;
         int nodeValue = -1;
-        for (int i = 0; i < n; i++)
-            System.out.println(Arrays.toString(cost[i]));
+        
         for (int i = 0; i < n; i++) {
             int count = 0;
             for (int j = 0; j < n; j++) {
