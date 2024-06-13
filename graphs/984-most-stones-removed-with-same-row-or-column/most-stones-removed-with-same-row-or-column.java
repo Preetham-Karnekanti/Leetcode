@@ -1,6 +1,6 @@
 class Solution {
     public int removeStones(int[][] stones) {
-        HashMap<Integer, Integer> stonesNode = new HashMap<>();
+        HashSet<Integer> stonesNode = new HashSet<>();
         int maxRow = 0, maxCol = 0;
         for (int e[] : stones) {
             maxRow = Math.max(maxRow, e[0]);
@@ -10,12 +10,12 @@ class Solution {
         for (int e[] : stones) {
             int nodeRow = e[0];
             int nodeCol = e[1] + maxRow + 1;
-            stonesNode.put(nodeRow, 1);
-            stonesNode.put(nodeCol, 1);
+            stonesNode.add(nodeRow);
+            stonesNode.add(nodeCol);
             ds.unionBySize(nodeRow, nodeCol);
         }
         int count = 0;
-        for (int key : stonesNode.keySet()) {
+        for (int key : stonesNode) {
             if (ds.findParent(key) == key)
                 count++;
         }
