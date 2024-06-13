@@ -35,62 +35,35 @@ class Solution {
     }
 }
 
-
-public class DisjointSet {
-    ArrayList<Integer> rank;
-    ArrayList<Integer> parent;
-    ArrayList<Integer> size;
+class DisjointSet {
+    int parent[], size[];
 
     DisjointSet(int n) {
-        rank = new ArrayList<>();
-        parent = new ArrayList<>();
-        size = new ArrayList<>();
-        for (int i = 0; i <= n; i++) {
-            rank.add(0);
-            parent.add(i);
-            size.add(1);
+        parent = new int[n];
+        size = new int[n];
+        for (int i = 0; i < n; i++) {
+            parent[i] = i;
+            size[i] = 1;
         }
     }
 
-    public int findParent(int node) {
-        if (node == parent.get(node))
-            return node;
-        int pNode = findParent(parent.get(node));
-        parent.set(node, pNode);
-        return pNode;
-    }
-
-    public void unionByRank(int u, int v) {
-        int pu = findParent(u);
-        int pv = findParent(v);
-        if (pu == pv) {
-            return;
-        }
-        int puRank = rank.get(pu);
-        int pvRank = rank.get(pv);
-        if (puRank > pvRank) {
-            parent.set(pv, pu);
-        } else if (puRank < pvRank) {
-            parent.set(pu, pv);
-        } else {
-            parent.set(pu, pv);
-            int uRank = rank.get(pu);
-            rank.set(pv, uRank + 1);
-        }
+    public int findParent(int u) {
+        if (parent[u] == u)
+            return u;
+        return parent[u] = findParent(parent[u]);
     }
 
     public void unionBySize(int u, int v) {
         int pu = findParent(u);
         int pv = findParent(v);
-        if (pu == pv) {
+        if (pu == pv)
             return;
-        }
-        if (size.get(pu) < size.get(pv)) {
-            parent.set(pu, pv);
-            size.set(pv, size.get(pu) + size.get(pv));
+        if (size[pu] > size[pv]) {
+            size[pu] += size[pv];
+            parent[pv] = pu;
         } else {
-            parent.set(pv, pu);
-            size.set(pu, size.get(pu) + size.get(pv));
+            size[pv] += size[pu];
+            parent[pu] = pv;
         }
     }
 }
