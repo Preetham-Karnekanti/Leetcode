@@ -27,7 +27,7 @@ class Graph {
         int dis[] = new int[n];
         Arrays.fill(dis, (int) 1e9);
         dis[src] = 0;
-        PriorityQueue<int[]> pq = new PriorityQueue<>((a, b) -> a[0] - b[0]);
+        Queue<int[]> pq = new LinkedList<>();
         pq.add(new int[] { 0, src });
         while (!pq.isEmpty()) {
             int cur[] = pq.poll();
