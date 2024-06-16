@@ -1,19 +1,17 @@
 class Solution {
     public int minPatches(int[] nums, int n) {
-        long ans = 0, sum = 0;
-        for (int i = 0; i < nums.length && sum < n; i++) {
-            if (nums[i] <= sum + 1) {
-                sum += nums[i];
+        int patches = 0;
+        long x = 1;
+        int length = nums.length, index = 0;
+        while (x <= n) {
+            if (index < length && nums[index] <= x) {
+                x += nums[index];
+                index++;
             } else {
-                i--;
-                ans++;
-                sum = sum * 2 + 1;
+                x *= 2;
+                patches++;
             }
         }
-        while (sum < n) {
-            sum = sum * 2 + 1;
-            ans++;
-        }
-        return (int) ans;
+        return patches;
     }
 }
