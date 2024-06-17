@@ -9,7 +9,6 @@ class Solution {
             adj.get(u).add(v);
             adj.get(v).add(u);
         }
-        System.out.println(adj);
         int first = 0;
         for (int key : adj.keySet()) {
             if (adj.get(key).size() == 1) {
