@@ -32,6 +32,8 @@ class Solution {
                 bouquetsMadeTillNow++;
                 adjacentCount = 0;
             }
+            if (bouquetsMadeTillNow >= m)
+                return true;
         }
         return bouquetsMadeTillNow >= m;
     }
