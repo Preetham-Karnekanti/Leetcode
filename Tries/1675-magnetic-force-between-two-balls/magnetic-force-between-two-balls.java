@@ -4,7 +4,7 @@ class Solution {
         Arrays.sort(position);
         int low = 1;
         int ans = 0;
-        int high = position[n - 1] - position[0];
+        int high = position[n - 1];
         while (low <= high) {
             int mid = low + (high - low) / 2;
             if (isPossible(position, m, mid)) {
