@@ -15,7 +15,7 @@ class MagicDictionary {
         for (int i = 0; i < searchWord.length(); i++) {
             char original = chArray[i];
             for (char ch = 'a'; ch <= 'z'; ch++) {
-                if (chArray[i] != ch) {
+                if (ch != original) {
                     chArray[i] = ch;
                     String str = new String(chArray);
                     if (hs.contains(str) && !str.equals(searchWord))
