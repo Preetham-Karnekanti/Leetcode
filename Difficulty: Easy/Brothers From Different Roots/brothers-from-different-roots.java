@@ -37,27 +37,59 @@ class Solution
 	public static int countPairs(Node root1, Node root2, int x)
 	{
 		// Code here
-        int count[] = new int[1];
-        HashSet<Integer> hs = new HashSet<>();
-        inorder1(root1, hs);
-        inorder2(root2, hs, count, x);
-        return count[0];
-	}
-	
-	public static void inorder1(Node root, HashSet<Integer> hs){
-	    if(root == null)
-	        return;
-	    hs.add(root.data);
-	    inorder1(root.left, hs);
-	    inorder1(root.right, hs);
-	}
-	public static void inorder2(Node root, HashSet<Integer> hs, int count[], int x){
-	    if(root == null)
-	        return;
-	    if(hs.contains(x - root.data))
-	        count[0]++;
-	    inorder2(root.left, hs, count, x);
-	    inorder2(root.right, hs, count, x);
+        if(root1 == null || root2 == null)
+			return 0;
+
+		// Create two stacks to store the nodes of the trees
+		Stack<Node> st1 = new Stack<>();
+		Stack<Node> st2 = new Stack<>();
+		Node top1, top2;
+		int count = 0;
+
+		// Traverse both trees in inorder manner using stacks
+		while(true){
+			// Push all left nodes of root1 and right nodes of root2 to their respective stacks
+			while(root1 != null){
+				st1.push(root1);
+				root1 = root1.left;
+			}
+			while(root2 != null){
+				st2.push(root2);
+				root2 = root2.right;
+			}
+
+			// If either stack is empty, break the loop
+			if(st1.isEmpty() || st2.isEmpty())
+				break;
+
+			// Get the top nodes of both stacks
+			top1 = st1.peek();
+			top2 = st2.peek();
+
+			// If the sum of the values of top nodes is equal to x,
+			// increment the count, pop both nodes from the stacks,
+			// and move to the right of the left subtree of top1 and the left of the right subtree of top2
+			if((top1.data + top2.data) == x){
+				count ++;
+				st1.pop();
+				st2.pop();
+				root1 = top1.right;
+				root2 = top2.left;
+			}
+			// If the sum is less than x, pop the top node from st1
+			else if((top1.data + top2.data) < x){
+				st1.pop();
+				root1 = top1.right;
+			}
+			// If the sum is greater than x, pop the top node from st2
+			else{
+				st2.pop();
+				root2 = top2.left;
+			}
+		}
+
+		// Return the count of pairs with sum equal to x
+		return count;
 	}
 }
 
