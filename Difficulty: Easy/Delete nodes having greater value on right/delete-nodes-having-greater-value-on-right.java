@@ -83,26 +83,35 @@ class Solution
     Node compute(Node head)
     {
         // your code here
-        Stack<Node> st = new Stack<>();
-        Node thead = head;
-        while(thead!= null){
-            st.push(thead);
-            thead = thead.next;
+       Node reversed = reverse(head);
+       Node temp = reversed;
+       int max = 0;
+       Node ans = null;
+      while(reversed!= null){
+          if(ans == null){
+              ans = reversed;
+              max = reversed.data;
+          }else if(reversed.data >= max){
+              max = reversed.data;
+              ans.next = reversed;
+              ans = ans.next;
+          }
+          reversed = reversed.next;
+      }
+        
+        ans.next = null;
+       return reverse(temp);
+    }
+    
+    public Node reverse(Node head){
+        Node cur = head, prev = null;
+        while(cur != null){
+            Node next = cur.next;
+            cur.next = prev;
+            prev = cur;
+            cur = next;
         }
-        Node ans = null;
-        int last = -1;
-        while(!st.isEmpty()){
-            Node cur = st.pop();
-            if(ans == null){
-                ans = cur;
-                last = cur.data;
-            }else if(cur.data >= last){
-                cur.next = ans;
-                ans = cur;
-                last = cur.data;
-            }
-        }
-        return ans;
+        return prev;
     }
 }
   
