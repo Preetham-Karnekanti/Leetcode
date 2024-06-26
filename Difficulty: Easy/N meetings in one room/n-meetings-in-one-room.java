@@ -45,10 +45,10 @@ class Solution
             arr[i][0] = start[i];
             arr[i][1] = end[i];
         }
-        Arrays.sort(arr,(a,b) -> a[1] - b[1]);
+        Arrays.sort(arr, (a, b) -> a[1] - b[1]);
         int prevEnd = -1;
         int count = 0;
-        for(int i = 0;i<n;i++){
+        for(int i = 0; i < n;i++){
             if(arr[i][0] > prevEnd){
                 count++;
                 prevEnd = arr[i][1];
