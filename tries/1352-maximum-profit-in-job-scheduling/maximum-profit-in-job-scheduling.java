@@ -11,7 +11,7 @@ class Solution {
             task[i][2] = profit[i];
         }
         Arrays.sort(task, (a, b) -> {
-            return a[0] == b[0] ? a[1] - b[1] : a[0] - b[0];
+            return a[0] - b[0];
         });
         return helper(task, 0);
     }
