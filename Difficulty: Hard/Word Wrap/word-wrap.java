@@ -29,30 +29,31 @@ class Solution
 {
     public int solveWordWrap (int[] nums, int k)
     {
-        // Code here 
+        // Code here
         int dp[] = new int[nums.length];
         Arrays.fill(dp, -1);
         return helper(nums, k, 0, dp);
     }
     
-    public int helper(int[] nums, int maxLineWidth, int idx, int dp[]){
-        if(idx >= nums.length - 1)
+    public int helper(int nums[], int k, int idx, int dp[]){
+        if(idx == nums.length)
             return 0;
-        if(dp[idx] !=-1)
+        if(dp[idx] != -1)
             return dp[idx];
-        int sum = 0;
-        int min = Integer.MAX_VALUE;
-        for(int i = idx;i<nums.length;i++){
-            sum += nums[i];
-            if(maxLineWidth >= sum && i == nums.length - 1){
-                min = Math.min(min, helper(nums, maxLineWidth, i + 1, dp));
+        int min = (int)1e9;
+        int letters = 0;
+        for(int i = idx;i< nums.length;i++){
+            letters += nums[i];
+            if(letters <= k){
+                if(i == nums.length - 1){
+                    min = Math.min(min, helper(nums, k, i + 1, dp));
+                }else{
+                    int spaces = k - letters;
+                    spaces *= spaces;
+                    min = Math.min(min, spaces + helper(nums, k, i + 1, dp));
+                }
             }
-            else if(maxLineWidth >= sum){
-                int x = maxLineWidth - sum;
-                x = x*x;
-                min = Math.min(min, x +helper(nums, maxLineWidth, i + 1, dp));
-            }
-            sum++;
+            letters++;
         }
         return dp[idx] = min;
     }
