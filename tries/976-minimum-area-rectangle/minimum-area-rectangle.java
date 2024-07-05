@@ -16,9 +16,10 @@ class Solution {
                 if (x1 != x2 && y1 != y2) {
                     String s1 = x1 + ":" + y2;
                     String s2 = x2 + ":" + y1;
-                    if (hs.contains(s1) && hs.contains(s2)) {
-                        area = Math.min(area, Math.abs((x1 - x2) * (y1 - y2)));
-                    }
+                    if (area > Math.abs((x1 - x2) * (y1 - y2)))
+                        if (hs.contains(s1) && hs.contains(s2)) {
+                            area = Math.min(area, Math.abs((x1 - x2) * (y1 - y2)));
+                        }
                 }
             }
         }
