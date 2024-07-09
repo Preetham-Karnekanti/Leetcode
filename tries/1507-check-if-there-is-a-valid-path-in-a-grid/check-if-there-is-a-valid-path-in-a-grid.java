@@ -21,6 +21,8 @@ class Solution {
                 for (int[] dir : getDirections(grid[nr][nc])) {
                     if (nr + dir[0] == r && nc + dir[1] == c) {
                         q.add(new int[] { nr, nc });
+                        if (nr == m - 1 && nc == n - 1)
+                            return true;
                         vis[nr][nc] = true;
                     }
                 }
