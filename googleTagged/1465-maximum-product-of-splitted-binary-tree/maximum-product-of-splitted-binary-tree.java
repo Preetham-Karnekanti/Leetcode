@@ -36,8 +36,8 @@ class Solution {
             return 0;
         long left = findMaxProduct(root.left, totalSum, max);
         long right = findMaxProduct(root.right, totalSum, max);
-        long sum = root.val + left + right;
-        max[0] = Math.max(max[0], sum * (totalSum - sum));
-        return sum;
+        max[0] = Math.max(max[0], left * (totalSum - left));
+        max[0] = Math.max(max[0], right * (totalSum - right));
+        return left + right + root.val;
     }
 }
