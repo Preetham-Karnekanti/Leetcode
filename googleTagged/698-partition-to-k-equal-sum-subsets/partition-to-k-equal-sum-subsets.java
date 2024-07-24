@@ -1,28 +1,36 @@
 class Solution {
-    public boolean canPartitionKSubsets(int[] nums, int K) {
+    public boolean canPartitionKSubsets(int[] nums, int k) {
         int sum = 0;
-        int n = nums.length;
-        for (int i = 0; i < n; i++)
-            sum += nums[i];
-        if (sum % K != 0)
+        Arrays.sort(nums);
+        for (int i : nums)
+            sum += i;
+        if (sum % k != 0)
             return false;
-        return helper(nums, 0, 0, sum / K, K);
+        sum = sum / k;
+        HashSet<Integer> hs = new HashSet<>();
+        return solve(nums, k, sum, hs, 0, 0);
     }
 
-    public static boolean helper(int[] nums, int idx, int sum, int target, int k) {
+    public boolean solve(int nums[], int k, int targetSum, HashSet<Integer> hs, int idx, int sum) {
         if (k == 0)
             return true;
-        if (sum == target)
-            return helper(nums, 0, 0, target, k - 1);
-        if (idx >= nums.length)
-            return false;
-        if (nums[idx] != -1 && sum + nums[idx] <= target) {
-            int val = nums[idx];
-            nums[idx] = -1;
-            if (helper(nums, idx + 1, sum + val, target, k))
-                return true;
-            nums[idx] = val;
+        if (targetSum == sum) {
+            return solve(nums, k - 1, targetSum, hs, 0, 0);
         }
-        return helper(nums, idx + 1, sum, target, k);
+        if (sum > targetSum)
+            return false;
+        if (idx == nums.length)
+            return false;
+        for (int i = idx; i < nums.length; i++) {
+            if (hs.contains(i) || sum + nums[i] > targetSum)
+                continue;
+            if (i - 1 >= 0 && nums[i] == nums[i - 1] && !hs.contains(i - 1))
+                continue;
+            hs.add(i);
+            if (solve(nums, k, targetSum, hs, i + 1, sum + nums[i]))
+                return true;
+            hs.remove(i);
+        }
+        return false;
     }
 }
