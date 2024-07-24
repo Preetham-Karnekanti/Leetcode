@@ -16,8 +16,9 @@ class Solution {
         }
         return nums;
     }
-    public int getMapping(int num, int mappings[], HashMap<Integer, Integer> hm){
-        if(hm.containsKey(num))
+
+    public int getMapping(int num, int mappings[], HashMap<Integer, Integer> hm) {
+        if (hm.containsKey(num))
             return hm.get(num);
         int mappedNumber = convertToMappings(num, mappings);
         hm.put(num, mappedNumber);
@@ -27,14 +28,14 @@ class Solution {
     public int convertToMappings(int num, int[] mappings) {
         if (num == 0)
             return mappings[0];
-        StringBuilder res = new StringBuilder();
-        int temp = num;
+        int placeValue = 1;
+        int res = 0;
         while (num != 0) {
-            res.append(mappings[num % 10]);
+            res = placeValue * mappings[num % 10] + res;
             num = num / 10;
+            placeValue *= 10;
         }
-        res.reverse();
-        return Integer.parseInt(res.toString());
+        return res;
     }
 }
 
