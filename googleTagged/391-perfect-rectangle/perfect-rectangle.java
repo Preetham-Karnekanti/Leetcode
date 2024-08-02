@@ -31,17 +31,18 @@ class Solution {
 
             // Define the corners of the current rectangle
             String[] currentCorners = {
-                x1 + " " + y1, 
-                x1 + " " + y2, 
-                x2 + " " + y1, 
-                x2 + " " + y2
+                    x1 + " " + y1,
+                    x1 + " " + y2,
+                    x2 + " " + y1,
+                    x2 + " " + y2
             };
 
             // Track corners and their occurrences
             for (String corner : currentCorners) {
-                if (!corners.add(corner)) {
+                if (corners.contains(corner))
                     corners.remove(corner);
-                }
+                else
+                    corners.add(corner);
             }
         }
 
@@ -54,11 +55,11 @@ class Solution {
         }
 
         // Check if we have exactly 4 corners left
-        if (corners.size() != 4 || 
-            !corners.contains(minX + " " + minY) ||
-            !corners.contains(minX + " " + maxY) ||
-            !corners.contains(maxX + " " + minY) ||
-            !corners.contains(maxX + " " + maxY)) {
+        if (corners.size() != 4 ||
+                !corners.contains(minX + " " + minY) ||
+                !corners.contains(minX + " " + maxY) ||
+                !corners.contains(maxX + " " + minY) ||
+                !corners.contains(maxX + " " + maxY)) {
             return false;
         }
 
