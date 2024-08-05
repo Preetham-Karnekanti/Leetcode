@@ -1,32 +1,22 @@
 class Solution {
     public int minSwaps(int[] nums) {
         int n = nums.length;
-        int countOnes = 0;
-        for (int num : nums) {
-            if (num == 1) countOnes++;
+        int arr[] = new int[2 * n];
+        for (int i = 0; i < 2 * n; i++) {
+            arr[i] = nums[i % n];
         }
-        if (countOnes == 0) return 0;
-
-        // Extend the array to handle the circular nature
-        int[] extendedNums = new int[2 * n];
-        System.arraycopy(nums, 0, extendedNums, 0, n);
-        System.arraycopy(nums, 0, extendedNums, n, n);
-
-        // Initialize the number of zeroes in the first window
-        int currentZeroes = 0;
-        for (int i = 0; i < countOnes; i++) {
-            if (extendedNums[i] == 0) currentZeroes++;
+        int windowSize = 0;
+        for (int i = 0; i < n; i++) {
+            windowSize += nums[i];
         }
-        int minZeroes = currentZeroes;
-
-        // Slide the window
-        for (int i = countOnes; i < extendedNums.length; i++) {
-            if (extendedNums[i] == 0) currentZeroes++;
-            if (extendedNums[i - countOnes] == 0) currentZeroes--;
-
-            minZeroes = Math.min(minZeroes, currentZeroes);
+        int ones = 0;
+        int maxOnes = 0;
+        for(int i = 0;i<arr.length;i++){
+            ones += arr[i];
+            if(i >= windowSize && arr[i-windowSize] == 1)
+                ones--;
+            maxOnes = Math.max(maxOnes, ones);
         }
-
-        return minZeroes;
+        return windowSize - maxOnes;
     }
 }
