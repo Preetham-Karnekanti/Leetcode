@@ -8,7 +8,6 @@ class ValidWordAbbr {
             hm.putIfAbsent(abbrevation, new HashSet<>());
             hm.get(abbrevation).add(str);
         }
-        System.out.println(hm);
     }
 
     public boolean isUnique(String word) {
