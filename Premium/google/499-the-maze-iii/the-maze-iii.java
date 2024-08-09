@@ -22,8 +22,9 @@ class Solution {
                 int nr = r;
                 int nc = c;
                 int steps = 0;
-                while (isValid(nr + dx[i], nc + dy[i], m, n) && maze[nr + dx[i]][nc + dy[i]] == 0
-                        && (nr != hole[0] || nc != hole[1])) {
+                while (isValid(nr + dx[i], nc + dy[i], m, n)
+                        && maze[nr + dx[i]][nc + dy[i]] == 0
+                        && !isHole(hole, nr, nc)) {
                     nr = nr + dx[i];
                     nc = nc + dy[i];
                     steps++;
@@ -48,6 +49,12 @@ class Solution {
         if (r < 0 || c < 0 || r >= m || c >= n)
             return false;
         return true;
+    }
+
+    public boolean isHole(int hole[], int r, int c) {
+        if (r == hole[0] && c == hole[1])
+            return true;
+        return false;
     }
 }
 
