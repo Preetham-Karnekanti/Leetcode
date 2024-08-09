@@ -14,7 +14,7 @@ class Solution {
         HashSet<Integer> hs = new HashSet<>();
         for (int i = row; i < row + 3; i++) {
             for (int j = col; j < col + 3; j++) {
-                if (grid[i][j] >= 10)
+                if (grid[i][j] >= 10 || hs.contains(grid[i][j]))
                     return false;
                 hs.add(grid[i][j]);
             }
