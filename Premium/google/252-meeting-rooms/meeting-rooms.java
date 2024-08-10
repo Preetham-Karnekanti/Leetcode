@@ -1,14 +1,21 @@
 class Solution {
     public boolean canAttendMeetings(int[][] intervals) {
-        if(intervals.length == 0)
-            return true;
-        Arrays.sort(intervals, (a, b) -> a[0] - b[0]);
-        int end = intervals[0][1];
-        for (int i = 1; i < intervals.length; i++) {
-            if (end > intervals[i][0])
-                return false;
-            end = intervals[i][1];
+        int max = 0;
+        int n = intervals.length;
+        for (int i = 0; i < n; i++) {
+            max = Math.max(max, intervals[i][1]);
         }
+        int timeline[] = new int[max + 1];
+        for (int i = 0; i < n; i++) {
+            timeline[intervals[i][0]]++;
+            timeline[intervals[i][1]]--;
+        }
+        for (int i = 1; i <= max; i++)
+            timeline[i] += timeline[i - 1];
+
+        for (int i = 0; i <= max; i++)
+            if (timeline[i] > 1)
+                return false;
         return true;
     }
 }
