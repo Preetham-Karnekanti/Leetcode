@@ -3,8 +3,7 @@ class Solution {
     int dy[] = new int[] { 0, 0, -1, 1 };
 
     public int minDays(int[][] grid) {
-        int one = countIslands(grid);
-        if (one > 1 || one == 0)
+        if (countIslands(grid) != 1)
             return 0;
 
         for (int i = 0; i < grid.length; i++) {
@@ -12,7 +11,7 @@ class Solution {
                 if (grid[i][j] == 1) {
                     grid[i][j] = 0;
                     int count = countIslands(grid);
-                    if (count > 1 || count == 0)
+                    if (count != 1)
                         return 1;
                     grid[i][j] = 1;
                 }
@@ -29,6 +28,8 @@ class Solution {
         for (int i = 0; i < grid.length; i++) {
             for (int j = 0; j < grid[0].length; j++) {
                 if (!vis[i][j] && grid[i][j] == 1) {
+                    if(count > 1)
+                        return 2;
                     dfs(vis, grid, i, j);
                     count++;
                 }
