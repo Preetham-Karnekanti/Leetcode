@@ -1,7 +1,6 @@
 class Solution {
     public List<String> fullJustify(String[] words, int maxWidth) {
         List<String> wordsIntoLines = splitIntoSentnce(words, maxWidth);
-        System.out.println(wordsIntoLines);
         List<String> res = new ArrayList<>();
         for (int i = 0; i < wordsIntoLines.size() - 1; i++) {
             String justified = justifyTheSenctence(wordsIntoLines.get(i), maxWidth);
