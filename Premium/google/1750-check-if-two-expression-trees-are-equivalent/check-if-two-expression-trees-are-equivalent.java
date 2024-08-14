@@ -15,21 +15,19 @@
  */
 class Solution {
     public boolean checkEquivalence(Node root1, Node root2) {
-        String s1 = parse(root1);
-        String s2 = parse(root2);
-        char ch1[] = s1.toCharArray();
-        char ch2[] = s2.toCharArray();
-        Arrays.sort(ch1);
-        Arrays.sort(ch2);
-        return Arrays.equals(ch1, ch2);
+        int arr1[] = new int[26];
+        int arr2[] = new int[26];
+        parse(root1, arr1);
+        parse(root2, arr2);
+        return Arrays.equals(arr1, arr2);
     }
 
-    public String parse(Node root) {
+    public void parse(Node root, int[] arr) {
         if (root == null)
-            return "";
-        String left = parse(root.left);
-        String right = parse(root.right);
-
-        return left + root.val + right;
+            return;
+        if (root.val != '+')
+            arr[root.val - 'a']++;
+        parse(root.left, arr);
+        parse(root.right, arr);
     }
 }
