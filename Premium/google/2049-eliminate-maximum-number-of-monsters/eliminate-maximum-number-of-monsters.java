@@ -5,7 +5,6 @@ class Solution {
         for (int i = 0; i < n; i++) {
             time[i] = (double) dist[i] / (double) speed[i];
         }
-        System.out.println(Arrays.toString(time));
         Arrays.sort(time);
         int count = 0;
         for (int i = 0; i < n; i++) {
