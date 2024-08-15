@@ -8,6 +8,8 @@ class Solution {
                 while (i < word1.length() && j < word2.length()) {
                     if (word1.charAt(i) != word2.charAt(j))
                         count++;
+                    if(count >= 3)
+                        break;
                     i++;
                     j++;
                 }
