@@ -20,7 +20,7 @@ class Solution {
             head = head.next;
         }
         thead = reverse(thead);
-        if(carry == 1){
+        if (carry == 1) {
             ListNode newHead = new ListNode(1);
             newHead.next = thead;
             thead = newHead;
@@ -28,10 +28,10 @@ class Solution {
         return thead;
     }
 
-    public ListNode reverse(ListNode head){
+    public ListNode reverse(ListNode head) {
         ListNode cur = head;
         ListNode prev = null;
-        while(cur!= null){
+        while (cur != null) {
             ListNode next = cur.next;
             cur.next = prev;
             prev = cur;
