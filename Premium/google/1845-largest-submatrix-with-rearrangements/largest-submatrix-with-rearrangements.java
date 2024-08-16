@@ -14,7 +14,6 @@ class Solution {
 
         int res = 0;
         for (int i = 0; i < row; i++) {
-            System.out.println(Arrays.toString(matrix[i]));
             Arrays.sort(matrix[i]);
 
             for (int j = 0; j < col; j++) {
