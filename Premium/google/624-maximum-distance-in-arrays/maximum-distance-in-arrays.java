@@ -1,15 +1,30 @@
 class Solution {
     public int maxDistance(List<List<Integer>> arrays) {
-        int res = 0;
-        int max = arrays.get(0).get(arrays.get(0).size() - 1);
-        int min = arrays.get(0).get(0);
-        for (int i = 1; i < arrays.size(); i++) {
-            int min1 = arrays.get(i).get(0);
-            int max1 = arrays.get(i).get(arrays.get(i).size() - 1);
-            res = Math.max(res, Math.max(Math.abs(min - max1), Math.abs(max - min1)));
-            min = Math.min(min1, min);
-            max = Math.max(max1, max);
+        int min = Integer.MAX_VALUE;
+        int secMin = Integer.MAX_VALUE;
+        int max = Integer.MIN_VALUE;
+        int secMax = Integer.MIN_VALUE;
+        int minIdx = -1;
+        int maxIdx = -1;
+        for (int i = 0; i < arrays.size(); i++) {
+            int n = arrays.get(i).size();
+            int curMin = arrays.get(i).get(0);
+            int curMax = arrays.get(i).get(n - 1);
+            if (curMin < min) {
+                minIdx = i;
+                secMin = min;
+                min = curMin;
+            } else if (curMin < secMin) {
+                secMin = curMin;
+            }
+            if (curMax > max) {
+                secMax = max;
+                max = curMax;
+                maxIdx = i;
+            } else if (secMax < curMax) {
+                secMax = curMax;
+            }
         }
-        return res;
+        return maxIdx == minIdx ? Math.max(secMax - min, max - secMin) : max - min;
     }
 }
