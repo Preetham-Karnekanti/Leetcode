@@ -45,10 +45,13 @@ class Solution {
             for (int i = 0; i < 4; i++) {
                 int nr = dx[i] + r;
                 int nc = dy[i] + c;
-                if (!isValid(nr, nc, rows, cols) || vis[nr][nc] || grid[nr][nc] < grid[r][c])
+                if (!isValid(nr, nc, rows, cols) || vis[nr][nc])
                     continue;
-                vis[nr][nc] = true;
-                q.add(new int[] { nr, nc });
+                if (grid[nr][nc] >= grid[r][c]) {
+                    System.out.println(nr + " " + nc);
+                    vis[nr][nc] = true;
+                    q.add(new int[] { nr, nc });
+                }
             }
         }
     }
