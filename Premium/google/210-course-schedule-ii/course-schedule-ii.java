@@ -9,7 +9,7 @@ class Solution {
             indegree[e[0]]++;
             adj.get(e[1]).add(e[0]);
         }
-      
+
         Queue<Integer> q = new LinkedList<>();
         for (int i = 0; i < n; i++)
             if (indegree[i] == 0)
