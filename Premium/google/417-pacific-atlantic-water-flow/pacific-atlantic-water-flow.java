@@ -48,7 +48,6 @@ class Solution {
                 if (!isValid(nr, nc, rows, cols) || vis[nr][nc])
                     continue;
                 if (grid[nr][nc] >= grid[r][c]) {
-                    System.out.println(nr + " " + nc);
                     vis[nr][nc] = true;
                     q.add(new int[] { nr, nc });
                 }
