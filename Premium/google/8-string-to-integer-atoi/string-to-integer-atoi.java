@@ -3,8 +3,8 @@ class Solution {
         s = s.strip();
         if (s.length() == 0)
             return 0;
-        // if (s.charAt(0) - '0' < 0 && s.charAt(0) - '0' > 9)
-        //     return 0;
+        if (s.charAt(0) - '0' < 0 && s.charAt(0) - '0' > 9)
+            return 0;
         boolean isNegative = s.charAt(0) == '-' ? true : false;
         int i = isNegative || s.charAt(0) == '+' ? 1 : 0;
         long number = 0;
