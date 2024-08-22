@@ -1,72 +1,69 @@
-class TrieNode {
-    Map<Character, TrieNode> children;
-    Map<String, Integer> sentences;
-    public TrieNode() {
-        children = new HashMap<>();
-        sentences = new HashMap<>();
-    }
-}
-
 class AutocompleteSystem {
-    TrieNode root;
-    TrieNode currNode;
-    TrieNode dead;
-    StringBuilder currSentence;
-    
+
+    Trie root, curNode;
+    StringBuilder currentInput;
+
     public AutocompleteSystem(String[] sentences, int[] times) {
-        root = new TrieNode();
+        root = new Trie();
+        curNode = root;
+        currentInput = new StringBuilder();
         for (int i = 0; i < sentences.length; i++) {
             addToTrie(sentences[i], times[i]);
         }
-        
-        currSentence = new StringBuilder();
-        currNode = root;
-        dead = new TrieNode();
     }
-    
+
+    public void addToTrie(String word, int count) {
+        Trie temp = root;
+        for (int i = 0; i < word.length(); i++) {
+            int idx = word.charAt(i);
+            if (temp.children[idx] == null)
+                temp.children[idx] = new Trie();
+            temp = temp.children[idx];
+            temp.sentences.put(word, temp.sentences.getOrDefault(word, 0) + count);
+        }
+    }
+
     public List<String> input(char c) {
         if (c == '#') {
-            addToTrie(currSentence.toString(), 1);
-            currSentence.setLength(0);
-            currNode = root;
-            return new ArrayList<String>();
+            addToTrie(currentInput.toString(), 1);
+            currentInput.setLength(0);
+            curNode = root;
+            return new ArrayList<>();
         }
-        
-        currSentence.append(c);
-        if (!currNode.children.containsKey(c)) {
-            currNode = dead;
-            return new ArrayList<String>();
+        currentInput.append(c);
+        if (curNode == null || curNode.children[c] == null){
+            curNode = null;
+            return new ArrayList<>();
         }
-        
-        currNode = currNode.children.get(c);
-        List<String> sentences = new ArrayList<>(currNode.sentences.keySet());
+        curNode = curNode.children[c];
+        List<String> sentences = new ArrayList<>(curNode.sentences.keySet());
         Collections.sort(sentences, (a, b) -> {
-            int hotA = currNode.sentences.get(a);
-            int hotB = currNode.sentences.get(b);
-            if (hotA == hotB) {
-                return a.compareTo(b);
-            }
-            
-            return hotB - hotA;
+            int timesA = curNode.sentences.get(a);
+            int timesB = curNode.sentences.get(b);
+            if (timesA != timesB)
+                return timesB - timesA;
+            return a.compareTo(b);
         });
-        
         List<String> ans = new ArrayList<>();
         for (int i = 0; i < Math.min(3, sentences.size()); i++) {
             ans.add(sentences.get(i));
         }
-        
         return ans;
     }
-    
-    private void addToTrie(String sentence, int count) {
-        TrieNode node = root;
-        for (char c: sentence.toCharArray()) {
-            if (!node.children.containsKey(c)) {
-                node.children.put(c, new TrieNode());
-            }
-            
-            node = node.children.get(c);
-            node.sentences.put(sentence, node.sentences.getOrDefault(sentence, 0) + count);
-        }
+}
+
+class Trie {
+    Trie children[];
+    Map<String, Integer> sentences;
+
+    Trie() {
+        children = new Trie[256];
+        sentences = new HashMap<>();
     }
 }
+
+/**
+ * Your AutocompleteSystem object will be instantiated and called as such:
+ * AutocompleteSystem obj = new AutocompleteSystem(sentences, times);
+ * List<String> param_1 = obj.input(c);
+ */
