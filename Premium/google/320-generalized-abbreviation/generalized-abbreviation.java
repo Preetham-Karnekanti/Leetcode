@@ -1,18 +1,17 @@
 class Solution {
     public List<String> generateAbbreviations(String word) {
-        List<String> ans = new ArrayList<>();
+        ArrayList<String> ans = new ArrayList<>();
         helper(word, ans, 0, 0, "");
         return ans;
     }
-
-    public void helper(String word, List<String> ans, int count, int idx, String cur) {
-        if (idx == word.length()) {
-            if (count > 0)
-                cur += count;
-            ans.add(cur);
-        } else {
-            helper(word, ans, count + 1, idx + 1, cur);
-            helper(word, ans, 0, idx + 1, cur + (count > 0 ? count : "") + word.charAt(idx));
+    public void helper(String word, ArrayList<String> ans, int idx, int count, String temp){
+        if(idx == word.length()){
+            if(count > 0)
+                temp += count;
+            ans.add(temp);
+        }else{
+            helper(word, ans, idx + 1, count + 1, temp);
+            helper(word, ans, idx + 1, 0, temp + (count > 0 ? count : "") + word.charAt(idx));
         }
     }
 }
