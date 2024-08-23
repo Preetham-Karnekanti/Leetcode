@@ -1,7 +1,6 @@
 class Solution {
     public String fractionAddition(String expression) {
         String numbers[] = splitIntoNumbers(expression);
-        System.out.println(Arrays.toString(numbers));
         HashMap<Integer, Integer> hm = new HashMap<>();
         for (int i = 0; i < numbers.length; i += 2) {
             int denom = Integer.parseInt(numbers[i + 1]);
@@ -45,7 +44,7 @@ class Solution {
         List<String> result = new ArrayList<>();
 
         String[] parts = input.split("(?=[+-])");
-
+        // System.out.println(Arrays.toString(parts));
         for (String part : parts) {
             if (part.contains("/")) {
                 String[] subParts = part.split("/");
