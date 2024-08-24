@@ -19,7 +19,6 @@ class Solution {
         possibilities.add(halfToPalindrome(firstHalf - 1, len % 2 == 0));
         possibilities.add((long) Math.pow(10, len - 1) - 1);
         possibilities.add((long) Math.pow(10, len) + 1);
-        System.out.println(possibilities);
         // Find the palindrome with minimum difference, and minimum value.
         long diff = Long.MAX_VALUE, res = 0, nl = Long.parseLong(n);
         for (long cand : possibilities) {
@@ -39,7 +38,6 @@ class Solution {
         // Convert the given half to palindrome.
         long res = left;
         if (!even) left = left / 10;
-        System.out.println(left);
         while (left > 0) {
             res = res * 10 + (left % 10);
             left /= 10;
