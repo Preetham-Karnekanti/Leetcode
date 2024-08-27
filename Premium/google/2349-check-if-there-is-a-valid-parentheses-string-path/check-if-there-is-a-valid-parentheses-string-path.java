@@ -2,6 +2,9 @@ class Solution {
     public boolean hasValidPath(char[][] grid) {
         int n = grid.length;
         int m = grid[0].length;
+        if (grid[0][0] == ')' || grid[n - 1][m - 1] == '(' || (n + m - 1) % 2 != 0) {
+            return false;
+        }
         HashMap<String, Boolean> hm = new HashMap<>();
         return helper(grid, 0, 0, 0, hm);
     }
