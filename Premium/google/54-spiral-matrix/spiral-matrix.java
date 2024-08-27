@@ -14,12 +14,12 @@ class Solution {
             for (int i = startRow + 1; i <= endRow; i++) {
                 ans.add(matrix[i][endCol]);
             }
-            if (startRow < endRow) {
+            if (startRow != endRow) {
                 for (int i = endCol - 1; i >= startCol; i--) {
                     ans.add(matrix[endRow][i]);
                 }
             }
-            if (startCol < endCol) {
+            if (startCol != endCol) {
                 for (int i = endRow - 1; i > startRow; i--) {
                     ans.add(matrix[i][startCol]);
                 }
