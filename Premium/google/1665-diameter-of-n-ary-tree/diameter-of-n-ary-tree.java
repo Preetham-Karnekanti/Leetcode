@@ -29,16 +29,18 @@ class Solution {
     }
 
     public int dfs(Node root, int[] ans) {
-        PriorityQueue<Integer> pq = new PriorityQueue<>((a, b) -> b - a);
-        pq.add(0);
-        pq.add(0);
+        int firstMax = 0;
+        int secondMax = 0;
         for (Node children : root.children) {
             int childHeight = dfs(children, ans);
-            pq.add(childHeight);
+            if (childHeight > firstMax) {
+                secondMax = firstMax;
+                firstMax = childHeight;
+            } else if (childHeight > secondMax) {
+                secondMax = childHeight;
+            }
         }
-        int max1 = pq.poll();
-        int max2 = pq.poll();
-        ans[0] = Math.max(ans[0], max1 + max2);
-        return max1 + 1;
+        ans[0] = Math.max(ans[0], firstMax + secondMax);
+        return Math.max(firstMax, secondMax) + 1;
     }
 }
