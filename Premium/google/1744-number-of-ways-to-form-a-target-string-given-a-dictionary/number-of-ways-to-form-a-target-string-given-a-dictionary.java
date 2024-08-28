@@ -12,7 +12,7 @@ class Solution {
     public int helper(String words[], int chIdx, String target, int tIdx, int maxLen, int[][] dp) {
         if (tIdx == target.length())
             return 1;
-        if (chIdx == maxLen || maxLen - chIdx < target.length() - tIdx)
+        if (chIdx == maxLen || maxLen - chIdx < target.length() - tIdx) // remianing unused characters < needed characters 
             return 0;
         if (dp[chIdx][tIdx] != -1)
             return dp[chIdx][tIdx];
