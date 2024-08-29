@@ -3,10 +3,7 @@ class Solution {
 
     public int profitableSchemes(int n, int minProfit, int[] group, int[] profit) {
         int sum = 0;
-        for (int i = 0; i < profit.length; i++) {
-            sum += profit[i];
-        }
-        Integer dp[][][] = new Integer[n + 1][group.length][sum + 1];
+        Integer dp[][][] = new Integer[n + 1][group.length][minProfit + 1];
         return helper(n, minProfit, group, profit, 0, 0, dp);
     }
 
@@ -18,7 +15,8 @@ class Solution {
             return dp[n][idx][profitSoFar];
         int take = 0;
         if (group[idx] <= n) {
-            take = helper(n - group[idx], minProfit, group, profit, idx + 1, profitSoFar + profit[idx], dp);
+            take = helper(n - group[idx], minProfit, group, profit, idx + 1,
+                    Math.min(minProfit, profitSoFar + profit[idx]), dp);
         }
         int skip = helper(n, minProfit, group, profit, idx + 1, profitSoFar, dp);
         return dp[n][idx][profitSoFar] = (take + skip) % mod;
