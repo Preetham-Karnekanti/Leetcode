@@ -16,23 +16,24 @@
 class Solution {
     public List<List<Integer>> findLeaves(TreeNode root) {
         List<List<Integer>> ans = new ArrayList<>();
-        while (root != null) {
-            List<Integer> leaves = new ArrayList<>();
-            root = addLeaves(root, leaves);
-            ans.add(leaves);
-        }
+        collectLeaves(root, ans);
         return ans;
     }
 
-    public TreeNode addLeaves(TreeNode root, List<Integer> ans){
-        if(root == null)
-            return null;
-        if(root.left == null && root.right == null){
-            ans.add(root.val);
-            return null;
+    private int collectLeaves(TreeNode node, List<List<Integer>> ans) {
+        if (node == null) {
+            return -1;
         }
-        root.left = addLeaves(root.left, ans);
-        root.right = addLeaves(root.right, ans);
-        return root;
+        int leftHeight = collectLeaves(node.left, ans) + 1;
+        int rightHeight = collectLeaves(node.right, ans) + 1;
+        node.left = null;
+        node.right = null;
+        int currHeight = Math.max(leftHeight, rightHeight);
+
+        if (ans.size() == currHeight) {
+            ans.add(new ArrayList<>());
+        }
+        ans.get(currHeight).add(node.val);
+        return currHeight;
     }
 }
