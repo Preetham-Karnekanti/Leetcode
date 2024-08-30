@@ -1,39 +1,38 @@
-/**
- * Definition for a binary tree node.
- * public class TreeNode {
- * int val;
- * TreeNode left;
- * TreeNode right;
- * TreeNode() {}
- * TreeNode(int val) { this.val = val; }
- * TreeNode(int val, TreeNode left, TreeNode right) {
- * this.val = val;
- * this.left = left;
- * this.right = right;
- * }
- * }
- */
 class Solution {
-    public List<List<Integer>> findLeaves(TreeNode root) {
-        List<List<Integer>> ans = new ArrayList<>();
-        collectLeaves(root, ans);
-        return ans;
+
+    Boolean isLeaf(TreeNode root, List<Integer> leafs) {
+        // base case
+        if (root == null) {
+            return false;
+        }
+
+        // best case
+        if (root.left == null && root.right == null) {
+            leafs.add(root.val);
+            return true;
+        }
+
+        if (isLeaf(root.left, leafs)) {
+            root.left = null;
+        }
+        if (isLeaf(root.right, leafs)) {
+            root.right = null;
+        }
+
+        return false;
     }
 
-    private int collectLeaves(TreeNode node, List<List<Integer>> ans) {
-        if (node == null) {
-            return -1;
-        }
-        int leftHeight = collectLeaves(node.left, ans) + 1;
-        int rightHeight = collectLeaves(node.right, ans) + 1;
-        node.left = null;
-        node.right = null;
-        int currHeight = Math.max(leftHeight, rightHeight);
+    public List<List<Integer>> findLeaves(TreeNode root) {
+        boolean allDone = false;
+        List<List<Integer>> result = new ArrayList<>();
+        while (!allDone) {
 
-        if (ans.size() == currHeight) {
-            ans.add(new ArrayList<>());
+            List<Integer> curr = new ArrayList<>();
+            allDone = isLeaf(root, curr);
+            result.add(curr);
+
         }
-        ans.get(currHeight).add(node.val);
-        return currHeight;
+
+        return result;
     }
 }
