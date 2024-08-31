@@ -20,7 +20,6 @@ class Solution {
         hs = new HashSet<>();
         String s1 = serialize1(subRoot);
         serialize2(root);
-        System.out.println(s1 + " " + hs);
         return hs.contains(s1);
     }
 
