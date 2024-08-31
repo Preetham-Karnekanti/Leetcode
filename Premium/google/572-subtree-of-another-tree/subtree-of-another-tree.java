@@ -14,22 +14,30 @@
  * }
  */
 class Solution {
+    HashSet<String> hs;
+
     public boolean isSubtree(TreeNode root, TreeNode subRoot) {
-        if (root == null)
-            return false;
-        if (isIdentical(root, subRoot)) {
-            return true;
-        }
-        return isSubtree(root.left, subRoot) || isSubtree(root.right, subRoot);
+        hs = new HashSet<>();
+        String s1 = serialize1(subRoot);
+        serialize2(root);
+        System.out.println(s1 + " " + hs);
+        return hs.contains(s1);
     }
 
-    public boolean isIdentical(TreeNode root, TreeNode subroot) {
-        if (root == null && subroot == null)
-            return true;
-        if (root == null || subroot == null)
-            return false;
-        if (root.val != subroot.val)
-            return false;
-        return isIdentical(root.left, subroot.left) && isIdentical(root.right, subroot.right);
+    public String serialize1(TreeNode root) {
+        if (root == null)
+            return "#";
+        String left = serialize1(root.left);
+        String right = serialize1(root.right);
+        return root.val + " " + left + " " + right;
+    }
+
+    public String serialize2(TreeNode root) {
+        if (root == null)
+            return "#";
+        String left = serialize2(root.left);
+        String right = serialize2(root.right);
+        hs.add(root.val + " " + left + " " + right);
+        return root.val + " " + left + " " + right;
     }
 }
