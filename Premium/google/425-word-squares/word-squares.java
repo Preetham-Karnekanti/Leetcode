@@ -1,7 +1,10 @@
 class Solution {
     int n;
+    HashMap<String, ArrayList<String>> wordsWithPrefix;
 
     public List<List<String>> wordSquares(String[] words) {
+        wordsWithPrefix = new HashMap<>();
+        getWordsWithPrefix(words);
         List<List<String>> answer = new ArrayList<>();
         List<String> wordSquares = new ArrayList<>();
         n = words[0].length();
@@ -11,6 +14,16 @@ class Solution {
             wordSquares.remove(wordSquares.size() - 1);
         }
         return answer;
+    }
+
+    public void getWordsWithPrefix(String words[]) {
+        for (String word : words) {
+            for (int i = 0; i < word.length(); i++) {
+                String prefix = word.substring(0, i + 1);
+                wordsWithPrefix.putIfAbsent(prefix, new ArrayList<>());
+                wordsWithPrefix.get(prefix).add(word);
+            }
+        }
     }
 
     public void backtrack(int step, List<String> wordSquares, String[] words, List<List<String>> answer) {
@@ -23,19 +36,10 @@ class Solution {
             prefix.append(word.charAt(step));
         }
 
-        for (String word : getWordsWithPrefix(words, prefix.toString())) {
+        for (String word : wordsWithPrefix.getOrDefault(prefix.toString(), new ArrayList<>())) {
             wordSquares.add(word);
             backtrack(step + 1, wordSquares, words, answer);
             wordSquares.remove(wordSquares.size() - 1);
         }
-    }
-
-    public List<String> getWordsWithPrefix(String[] words, String prefix) {
-        List<String> candidates = new ArrayList<>();
-        for (String word : words) {
-            if (word.startsWith(prefix))
-                candidates.add(word);
-        }
-        return candidates;
     }
 }
