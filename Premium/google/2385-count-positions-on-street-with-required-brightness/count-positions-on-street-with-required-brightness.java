@@ -14,7 +14,6 @@ class Solution {
             prefix[i] += prefix[i - 1];
         }
         int count = 0;
-        System.out.println(Arrays.toString(prefix));
         for (int i = 0; i < n; i++) {
             if (prefix[i] >= requirement[i])
                 count++;
