@@ -1,23 +1,22 @@
 class Solution {
     public int numberOfPaths(int n, int[][] corridors) {
-        int count = 0;
-        ArrayList<HashSet<Integer>> graph = new ArrayList<>();
-        for(int i = 0;i<=n;i++)
-            graph.add(new HashSet<>());
-        for(int c[] : corridors){
-            int u = c[0];
-            int v = c[1];
-            graph.get(u).add(v);
-            graph.get(v).add(u);
+        int[][] adj=new int[n+1][n+1];
+        int result=0;
+        for(int i=0;i<corridors.length;i++) {
+            adj[corridors[i][0]][corridors[i][1]]=1;
+            adj[corridors[i][1]][corridors[i][0]]=1;
         }
-        for(int i = 1;i<=n;i++){
-            for(int ngh : graph.get(i)){
-                for(int ngh2 : graph.get(ngh)){
-                    if(graph.get(ngh2).contains(i))
-                        count++;
+        for(int i=1;i<=n;i++) {
+            for(int j=i+1;j<=n;j++) {
+                if(adj[i][j]==1) {
+                    for(int k=j+1;k<=n;k++) {
+                        if(adj[j][k]==1 && adj[k][i]==1) {
+                            result++;
+                        }
+                    }
                 }
             }
         }
-        return count/6;
+        return result;
     }
 }
