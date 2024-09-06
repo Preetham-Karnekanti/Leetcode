@@ -1,13 +1,13 @@
 class Solution {
     public int minProductSum(int[] nums1, int[] nums2) {
-        PriorityQueue<Integer> max = new PriorityQueue<>(Collections.reverseOrder());
         Arrays.sort(nums1);
-        for(int i: nums2)
-            max.add(i);
-        int sum = 0;
-        for(int i: nums1){
-            sum += i * max.poll();
+        Arrays.sort(nums2);
+        int i = 0;
+        int j = nums2.length-1;
+        int res = 0;
+        while (i<nums1.length) {
+            res += nums1[i++] * nums2[j--];
         }
-        return sum;
+        return res;
     }
 }
