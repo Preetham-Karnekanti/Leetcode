@@ -1,32 +1,22 @@
 class Solution {
     public List<Integer> minAvailableDuration(int[][] slots1, int[][] slots2, int duration) {
-        Map<Integer, Integer> counter = new TreeMap<>();
-        for (int[] slot : slots1) {
-            counter.put(slot[0], counter.getOrDefault(slot[0], 0) + 1);
-            counter.put(slot[1], counter.getOrDefault(slot[1], 0) - 1);
-        }
-        for (int[] slot : slots2) {
-            counter.put(slot[0], counter.getOrDefault(slot[0], 0) + 1);
-            counter.put(slot[1], counter.getOrDefault(slot[1], 0) - 1);
+        Arrays.sort(slots1, (a, b) -> a[0] - b[0]);
+        Arrays.sort(slots2, (a, b) -> a[0] - b[0]);
+
+        int left = 0, right = 0, m = slots1.length, n = slots2.length;
+        while (left < m && right < n) {
+            int[] A = slots1[left];
+            int[] B = slots2[right];
+
+            if (Math.min(A[1], B[1]) - Math.max(A[0], B[0]) >= duration)
+                return Arrays.asList(Math.max(A[0], B[0]), Math.max(A[0], B[0]) + duration);
+
+            if (A[1] < B[1])
+                left++;
+            else
+                right++;
         }
 
-        int start = -1;
-        int cnt = 0;
-        for (var entry : counter.entrySet()) {
-            cnt += entry.getValue();
-            if (cnt == 2) {
-                start = entry.getKey();
-            }
-            if (cnt < 2 && start > -1) {
-                int len = entry.getKey() - start;
-                if (len >= duration) {
-                    return List.of(start, start + duration);
-                } else {
-                    start = -1;
-                }
-
-            }
-        }
-        return Collections.emptyList();
+        return new ArrayList<>();
     }
 }
