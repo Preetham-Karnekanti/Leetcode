@@ -1,41 +1,42 @@
 class Solution {
     public List<List<Integer>> pacificAtlantic(int[][] heights) {
-        int rows = heights.length;
-        int cols = heights[0].length;
-        boolean pacific[][] = new boolean[rows][cols];
-        boolean atlantic[][] = new boolean[rows][cols];
-        Queue<int[]> q1 = new LinkedList<>();
-        Queue<int[]> q2 = new LinkedList<>();
-        for (int i = 0; i < rows; i++) {
-            q1.add(new int[] { i, 0 });
-            pacific[i][0] = true;
+        int n = heights.length;
+        int m = heights[0].length;
+        Queue<int[]> pq = new LinkedList<>();
+        Queue<int[]> aq = new LinkedList<>();
+        boolean pvis[][] = new boolean[n][m];
+        boolean avis[][] = new boolean[n][m];
+        for (int i = 0; i < m; i++) {
+            pq.add(new int[] { 0, i });
+            pvis[0][i] = true;
+            aq.add(new int[] { n - 1, i });
+            avis[n - 1][i] = true;
         }
-        for (int i = 1; i < cols; i++) {
-            pacific[0][i] = true;
-            q1.add(new int[] { 0, i });
+        for (int i = 0; i < n; i++) {
+            pq.add(new int[] { i, 0 });
+            pvis[i][0] = true;
+            aq.add(new int[] { i, m - 1 });
+            avis[i][m - 1] = true;
         }
-        bfs(heights, pacific, q1);
-        for (int i = 0; i < rows; i++) {
-            q2.add(new int[] { i, cols - 1 });
-            atlantic[i][cols - 1] = true;
-        }
-        for (int i = 0; i < cols; i++) {
-            q2.add(new int[] { rows - 1, i });
-            atlantic[rows - 1][i] = true;
-        }
-        bfs(heights, atlantic, q2);
-        List<List<Integer>> ans = new ArrayList<>();
-        for (int i = 0; i < rows; i++) {
-            for (int j = 0; j < cols; j++) {
-                if (pacific[i][j] && atlantic[i][j])
-                    ans.add(new ArrayList<>(Arrays.asList(i, j)));
+        bfs(heights, pq, pvis);
+        bfs(heights, aq, avis);
+        List<List<Integer>> answer = new ArrayList<>();
+        for (int i = 0; i < n; i++) {
+            for (int j = 0; j < m; j++) {
+                if (pvis[i][j] && avis[i][j])
+                    answer.add(new ArrayList<>(Arrays.asList(i, j)));
             }
         }
-        return ans;
+        return answer;
     }
 
-    public void bfs(int grid[][], boolean vis[][], Queue<int[]> q) {
-        int rows = grid.length, cols = grid[0].length;
+    public boolean isValid(int r, int c, int n, int m) {
+        if (r < 0 || c < 0 || r >= n || c >= m)
+            return false;
+        return true;
+    }
+
+    public void bfs(int[][] heights, Queue<int[]> q, boolean vis[][]) {
         int dx[] = new int[] { -1, 1, 0, 0 };
         int dy[] = new int[] { 0, 0, -1, 1 };
         while (!q.isEmpty()) {
@@ -43,31 +44,15 @@ class Solution {
             int r = cur[0];
             int c = cur[1];
             for (int i = 0; i < 4; i++) {
-                int nr = dx[i] + r;
-                int nc = dy[i] + c;
-                if (!isValid(nr, nc, rows, cols) || vis[nr][nc])
+                int nr = r + dx[i];
+                int nc = c + dy[i];
+                if (!isValid(nr, nc, heights.length, heights[0].length) || vis[nr][nc])
                     continue;
-                if (grid[nr][nc] >= grid[r][c]) {
-                    vis[nr][nc] = true;
+                if (heights[nr][nc] >= heights[r][c]) {
                     q.add(new int[] { nr, nc });
+                    vis[nr][nc] = true;
                 }
             }
         }
-    }
-
-    public boolean isValid(int r, int c, int rows, int cols) {
-        if (r < 0 || c < 0 || r >= rows || c >= cols)
-            return false;
-        return true;
-    }
-}
-
-class Pair {
-    int row;
-    int col;
-
-    Pair(int row, int col) {
-        this.row = row;
-        this.col = col;
     }
 }
