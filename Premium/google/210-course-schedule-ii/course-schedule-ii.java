@@ -1,31 +1,32 @@
 class Solution {
-    public int[] findOrder(int n, int[][] prerequisites) {
-        int[] topo = new int[n];
-        int indegree[] = new int[n];
-        ArrayList<ArrayList<Integer>> adj = new ArrayList<>();
-        for (int i = 0; i < n; i++)
-            adj.add(new ArrayList<>());
-        for (int e[] : prerequisites) {
-            indegree[e[0]]++;
-            adj.get(e[1]).add(e[0]);
+    public int[] findOrder(int numCourses, int[][] prerequisites) {
+        ArrayList<ArrayList<Integer>> graph = new ArrayList<>();
+        for (int i = 0; i < numCourses; i++) {
+            graph.add(new ArrayList<>());
         }
-
+        int indegree[] = new int[numCourses];
+        for (int e[] : prerequisites) {
+            int u = e[0];
+            int v = e[1];
+            indegree[u]++;
+            graph.get(v).add(u);
+        }
         Queue<Integer> q = new LinkedList<>();
-        for (int i = 0; i < n; i++)
+        for (int i = 0; i < numCourses; i++) {
             if (indegree[i] == 0)
                 q.add(i);
-        int i = 0;
+        }
+        int answer[] = new int[numCourses];
+        int idx = 0;
         while (!q.isEmpty()) {
             int cur = q.poll();
-            topo[i++] = cur;
-            for (int ngh : adj.get(cur)) {
+            answer[idx++] = cur;
+            for (int ngh : graph.get(cur)) {
                 indegree[ngh]--;
                 if (indegree[ngh] == 0)
                     q.add(ngh);
             }
         }
-        if (i != n)
-            return new int[0];
-        return topo;
+        return idx == numCourses ? answer : new int[0];
     }
 }
