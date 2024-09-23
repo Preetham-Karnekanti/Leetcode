@@ -5,14 +5,17 @@ class Solution {
         HashSet<String> hs = new HashSet<>(Arrays.asList(dictionary));
         return helper(s, hs, 0, dp);
     }
-    public int helper(String s, HashSet<String> hs, int idx, int[] dp){
-        if(idx == s.length())
+
+    public int helper(String s, HashSet<String> hs, int idx, int[] dp) {
+        if (idx == s.length())
             return 0;
-        if(dp[idx] != -1)
+        if (dp[idx] != -1)
             return dp[idx];
         int skip = helper(s, hs, idx + 1, dp) + 1;
-        for(int i = idx;i < s.length();i++){
-            if(hs.contains(s.substring(idx, i + 1))){
+        String temp = "";
+        for (int i = idx; i < s.length(); i++) {
+            temp += s.charAt(i);
+            if (hs.contains(temp)) {
                 skip = Math.min(skip, helper(s, hs, i + 1, dp));
             }
         }
