@@ -1,43 +1,51 @@
 class Solution {
     public int[] sumPrefixScores(String[] words) {
-        Trie root = new Trie();
-        for (String word : words) {
-            insert(root, word);
+        int wordCount = words.length;
+        Integer[] sortedIndices = new Integer[wordCount];
+        for (int i = 0; i < wordCount; i++) {
+            sortedIndices[i] = i;
         }
-        int answer[] = new int[words.length];
-        for (int i = 0; i < words.length; i++) {
-            answer[i] = search(words[i], root);
-        }
-        return answer;
+        Arrays.sort(sortedIndices, (a, b) -> words[a].compareTo(words[b]));
+        
+        int[] commonPrefixLengths = calculateCommonPrefixLengths(words, sortedIndices);
+        int[] scores = calculateScores(words, sortedIndices, commonPrefixLengths);
+        return scores;
     }
 
-    public void insert(Trie root, String word) {
-        for (int i = 0; i < word.length(); i++) {
-            int idx = word.charAt(i) - 'a';
-            if (root.children[idx] == null)
-                root.children[idx] = new Trie();
-            root = root.children[idx];
-            root.count++;
+    private int[] calculateCommonPrefixLengths(String[] words, Integer[] sortedIndices) {
+        int[] commonPrefixLengths = new int[words.length];
+        for (int i = 1; i < words.length; i++) {
+            String prevWord = words[sortedIndices[i - 1]];
+            String currWord = words[sortedIndices[i]];
+            int commonLength = 0;
+            while (commonLength < prevWord.length() && 
+                   commonLength < currWord.length() && 
+                   prevWord.charAt(commonLength) == currWord.charAt(commonLength)) {
+                commonLength++;
+            }
+            commonPrefixLengths[i] = commonLength;
         }
+        return commonPrefixLengths;
     }
 
-    public int search(String word, Trie root) {
-        int answer = 0;
-        for (int i = 0; i < word.length(); i++) {
-            int idx = word.charAt(i) - 'a';
-            root = root.children[idx];
-            answer += root.count;
+    private int[] calculateScores(String[] words, Integer[] sortedIndices, int[] commonPrefixLengths) {
+        int[] scores = new int[words.length];
+        for (int i = 0; i < sortedIndices.length; i++) {
+            int wordIndex = sortedIndices[i];
+            int wordLength = words[wordIndex].length();
+            scores[wordIndex] += wordLength;
+            int j = i + 1;
+            int commonLength = wordLength;
+            while (j < words.length) {
+                commonLength = Math.min(commonLength, commonPrefixLengths[j]);
+                if (commonLength == 0) {
+                    break;
+                }
+                scores[wordIndex] += commonLength;
+                scores[sortedIndices[j]] += commonLength;
+                j++;
+            }
         }
-        return answer;
-    }
-}
-
-class Trie {
-    Trie children[];
-    int count;
-
-    Trie() {
-        count = 0;
-        children = new Trie[26];
+        return scores;
     }
 }
