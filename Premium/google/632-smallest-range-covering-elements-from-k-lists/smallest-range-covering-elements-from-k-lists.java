@@ -1,30 +1,43 @@
 class Solution {
 
     public int[] smallestRange(List<List<Integer>> nums) {
-        PriorityQueue<int[]> pq = new PriorityQueue<>(
-            Comparator.comparingInt(a -> a[0])
-        );
-        int maxVal = Integer.MIN_VALUE, rangeStart = 0, rangeEnd =
-            Integer.MAX_VALUE;
+        List<int[]> merged = new ArrayList<>();
 
+        // Merge all lists with their list index
         for (int i = 0; i < nums.size(); i++) {
-            pq.offer(new int[] { nums.get(i).get(0), i, 0 });
-            maxVal = Math.max(maxVal, nums.get(i).get(0));
+            for (int num : nums.get(i)) {
+                merged.add(new int[] { num, i });
+            }
         }
 
-        while (pq.size() == nums.size()) {
-            int[] data = pq.poll();
-            int minVal = data[0], row = data[1], col = data[2];
+        // Sort the merged list
+        merged.sort(Comparator.comparingInt(a -> a[0]));
 
-            if (maxVal - minVal < rangeEnd - rangeStart) {
-                rangeStart = minVal;
-                rangeEnd = maxVal;
-            }
+        // Two pointers to track the smallest range
+        Map<Integer, Integer> freq = new HashMap<>();
+        int left = 0, count = 0;
+        int rangeStart = 0, rangeEnd = Integer.MAX_VALUE;
 
-            if (col + 1 < nums.get(row).size()) {
-                int nextVal = nums.get(row).get(col + 1);
-                pq.offer(new int[] { nextVal, row, col + 1 });
-                maxVal = Math.max(maxVal, nextVal);
+        for (int right = 0; right < merged.size(); right++) {
+            freq.put(
+                    merged.get(right)[1],
+                    freq.getOrDefault(merged.get(right)[1], 0) + 1);
+            if (freq.get(merged.get(right)[1]) == 1)
+                count++;
+
+            while (count == nums.size()) {
+                int curRange = merged.get(right)[0] - merged.get(left)[0];
+                if (curRange < rangeEnd - rangeStart) {
+                    rangeStart = merged.get(left)[0];
+                    rangeEnd = merged.get(right)[0];
+                }
+
+                freq.put(
+                        merged.get(left)[1],
+                        freq.get(merged.get(left)[1]) - 1);
+                if (freq.get(merged.get(left)[1]) == 0)
+                    count--;
+                left++;
             }
         }
 
