@@ -14,17 +14,5 @@ class Solution {
             j--;
         }
         return res;
-        // while (i < j) {
-        // if (ch[i] == '1' && ch[j] == '0') {
-        // res += j - i;
-        // i++;
-        // j--;
-        // } else if (ch[i] == '0')
-        // i++;
-        // else
-        // j--;
-        // }
-        // return res;
-        // }
     }
 }
