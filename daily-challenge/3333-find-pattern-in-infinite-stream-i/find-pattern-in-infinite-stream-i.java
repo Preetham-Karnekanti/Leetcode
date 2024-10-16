@@ -17,9 +17,7 @@ class Solution {
         if (patternBuilder.toString().equals(curStream.toString()))
             return 0;
         int left = 0;
-        int count = pattern.length;
         while (left <= (int) 1e5) {
-            count++;
             left++;
             curStream.deleteCharAt(0);
             curStream.append(infiniteStream.next());
