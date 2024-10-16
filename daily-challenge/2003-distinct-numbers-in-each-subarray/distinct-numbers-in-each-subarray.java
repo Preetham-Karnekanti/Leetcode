@@ -7,7 +7,6 @@ class Solution {
         for (int i = 0; i < k; i++) {
             freq.put(nums[i], freq.getOrDefault(nums[i], 0) + 1);
         }
-        System.out.println(freq);
         ans[idx++] = freq.size();
         int left = 0;
         for (int right = k; right < nums.length; right++) {
