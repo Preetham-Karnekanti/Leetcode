@@ -6,12 +6,8 @@ class Solution {
         int min = Integer.MAX_VALUE;
         int max = Integer.MIN_VALUE;
         for (int i = 0; i < n; i++) {
-            if (nums[i] <= min) {
-                if (nums[i] == min) {
-                    minIdx = Math.min(minIdx, i);
-                } else {
-                    minIdx = i;
-                }
+            if (nums[i] < min) {
+                minIdx = i;
                 min = nums[i];
             }
             if (nums[i] >= max) {
