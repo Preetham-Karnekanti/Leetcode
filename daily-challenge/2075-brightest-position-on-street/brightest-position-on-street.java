@@ -12,9 +12,9 @@ class Solution {
         int max = 0;
         int idx = 0;
         int sum = 0;
-        for(int key: map.keySet()){
+        for (int key : map.keySet()) {
             sum += map.get(key);
-            if(sum > max){
+            if (sum > max) {
                 idx = key;
                 max = sum;
             }
