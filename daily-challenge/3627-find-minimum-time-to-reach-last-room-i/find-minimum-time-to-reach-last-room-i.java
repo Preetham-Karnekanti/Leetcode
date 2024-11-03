@@ -7,29 +7,29 @@ class Solution {
         int vis[][] = new int[n][m];
         for (int i[] : vis)
             Arrays.fill(i, Integer.MAX_VALUE);
-       int[][] directions = {{1, 0}, {-1, 0}, {0, 1}, {0, -1}};
+        int dx[] = new int[] { -1, 1, 0, 0 };
+        int dy[] = new int[] { 0, 0, -1, 1 };
         vis[0][0] = 0;
         while (!pq.isEmpty()) {
             int cur[] = pq.poll();
-            int x = cur[0];
-            int y = cur[1];
+            int r = cur[0];
+            int c = cur[1];
             int timeSoFar = cur[2];
 
-            if (x == n - 1 && y == m - 1)
+            if (r == n - 1 && c == m - 1)
                 return timeSoFar;
 
-            for (int[] dir : directions) {
-                int newX = x + dir[0], newY = y + dir[1];
-
-                if (newX >= 0 && newX < n && newY >= 0 && newY < m) {
-                    int waitTime = Math.max(moveTime[newX][newY] - timeSoFar, 0);
-                    int newTime = timeSoFar + 1 + waitTime;
-
-                    if (newTime < vis[newX][newY]) {
-                        vis[newX][newY] = newTime;
-                        pq.offer(new int[]{ newX, newY, newTime});
-                    }
-                }
+            for (int i = 0; i < 4; i++) {
+                int nr = r + dx[i];
+                int nc = c + dy[i];
+                if (!isValid(nr, nc, n, m))
+                    continue;
+                int waitTime = Math.max(moveTime[nr][nc] - timeSoFar, 0);
+                int newTime = 1 + waitTime + timeSoFar;
+                if (newTime >= vis[nr][nc])
+                    continue;
+                pq.add(new int[] { nr, nc, 1 + waitTime + timeSoFar });
+                vis[nr][nc] = 1 + waitTime + timeSoFar;
             }
         }
         return vis[n - 1][m - 1];
