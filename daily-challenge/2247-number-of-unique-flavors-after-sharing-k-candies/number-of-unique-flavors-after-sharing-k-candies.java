@@ -14,18 +14,17 @@ class Solution {
         int max = 0, i = 0;
         List<Integer> window = new LinkedList<>();
         for (; i < k && i < candies.length; i++) {
-            window.add(candies[i]);
             cnt.put(candies[i], cnt.getOrDefault(candies[i], 0) - 1);
             if (cnt.get(candies[i]) == 0) {
                 cnt.remove(candies[i]);
             }
         }
         max = cnt.size();
-
+        int left = 0;
         for (; i < candies.length; i++) {
-            int firstE = window.isEmpty() ? 0 : window.removeFirst();
+            int firstE = candies[left];
+            left++;
             cnt.put(firstE, cnt.getOrDefault(firstE, 0) + 1);
-            window.add(candies[i]);
             cnt.put(candies[i], cnt.getOrDefault(candies[i], 0) - 1);
             if (cnt.get(candies[i]) == 0) {
                 cnt.remove(candies[i]);
