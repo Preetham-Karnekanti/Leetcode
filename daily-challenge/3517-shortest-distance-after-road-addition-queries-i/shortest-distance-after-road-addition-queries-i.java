@@ -22,17 +22,15 @@ class Solution {
     public int bfs(ArrayList<ArrayList<Integer>> adj) {
         int distance[] = new int[adj.size()];
         Arrays.fill(distance, Integer.MAX_VALUE);
-        Queue<int[]> q = new LinkedList<>();
-        q.add(new int[] { 0, 0 });
+        Queue<Integer> q = new LinkedList<>();
+        q.add(0);
         distance[0] = 0;
         while (!q.isEmpty()) {
-            int cur[] = q.poll();
-            int node = cur[0];
-            int distanceSoFar = cur[1];
+            int node = q.poll();
             for (int ngh : adj.get(node)) {
-                if (distance[ngh] > 1 + distanceSoFar) {
-                    distance[ngh] = 1 + distanceSoFar;
-                    q.add(new int[] { ngh, distance[ngh] });
+                if (distance[ngh] > 1 + distance[node]) {
+                    distance[ngh] = 1 + distance[node];
+                    q.add(ngh);
                 }
             }
         }
