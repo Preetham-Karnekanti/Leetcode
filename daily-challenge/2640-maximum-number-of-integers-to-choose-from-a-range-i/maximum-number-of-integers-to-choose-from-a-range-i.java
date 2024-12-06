@@ -1,6 +1,6 @@
 class Solution {
     public int maxCount(int[] banned, int n, int maxSum) {
-        HashSet<Integer> hs = new HashSet<>((int) 1e4);
+        HashSet<Integer> hs = new HashSet<>();
         for (int i : banned)
             hs.add(i);
         int sum = 0;
