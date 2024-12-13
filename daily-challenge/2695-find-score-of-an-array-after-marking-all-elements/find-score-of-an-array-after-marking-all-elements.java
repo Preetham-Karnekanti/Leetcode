@@ -8,18 +8,18 @@ class Solution {
         for (int i = 0; i < nums.length; i++)
             pq.add(new int[] { nums[i], i });
         long score = 0;
-        HashSet<Integer> marked = new HashSet<>();
+        boolean marked[] = new boolean[nums.length];
         while (!pq.isEmpty()) {
             int[] cur = pq.poll();
-            if (marked.contains(cur[1]))
+            if (marked[cur[1]])
                 continue;
             score += cur[0];
             int idx = cur[1];
-            marked.add(cur[1]);
+            marked[cur[1]] = true;
             if (idx - 1 >= 0)
-                marked.add(idx - 1);
+                marked[idx - 1] = true;
             if (idx + 1 < nums.length)
-                marked.add(idx + 1);
+                marked[idx + 1] = true;
         }
         return score;
     }
