@@ -9,14 +9,9 @@ class Solution {
             pq.add(new int[] { nums[i], i });
         while (k-- > 0) {
             int cur[] = pq.poll();
-            cur[0] = multiplier * cur[0];
-            pq.add(cur);
-        }
-        while (!pq.isEmpty()) {
-            int cur[] = pq.poll();
-            int value = cur[0];
-            int idx = cur[1];
-            nums[idx] = value;
+            int index = cur[1];
+            nums[index] = multiplier * cur[0];
+            pq.add(new int[] { nums[index], index });
         }
         return nums;
     }
