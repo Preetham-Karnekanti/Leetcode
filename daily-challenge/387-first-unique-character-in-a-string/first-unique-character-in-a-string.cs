@@ -13,11 +13,11 @@ public class Solution {
             }
         }
 
-        foreach(var key in charCount.Keys)
+        for(int i = 0; i< s.Length; i++)
         {
-            if(charCount[key] == 1)
+            if(charCount[s[i]] == 1)
             {
-                return s.IndexOf(key);
+                return i;
             }
         }
         return -1;
