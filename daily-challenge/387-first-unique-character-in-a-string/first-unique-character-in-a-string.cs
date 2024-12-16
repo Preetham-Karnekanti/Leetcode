@@ -1,21 +1,14 @@
 public class Solution {
     public int FirstUniqChar(string s) {
-        Dictionary<char, int> charCount = new Dictionary<char, int>();
+        int[] freq = new int[26];
         foreach(char c in s)
         {
-            if(!charCount.ContainsKey(c))
-            {
-                charCount.Add(c, 1);
-            }
-            else
-            {
-                charCount[c]++;
-            }
+            freq[c-'a']++;
         }
 
         for(int i = 0; i< s.Length; i++)
         {
-            if(charCount[s[i]] == 1)
+            if(freq[s[i]-'a'] == 1)
             {
                 return i;
             }
