@@ -1,13 +1,15 @@
 class Solution {
     public int maxChunksToSorted(int[] arr) {
-        int max = 0;
-        int count = 0;
-        for (int i = 0; i < arr.length; i++) {
-            max = Math.max(max, arr[i]);
-            if (max == i)
-                count++;
-        }
+        int n = arr.length;
+        int chunks = 0, prefixSum = 0, sortedPrefixSum = 0;
+        for (int i = 0; i < n; i++) {
+            prefixSum += arr[i];
+            sortedPrefixSum += i;
 
-        return count;
+            if (prefixSum == sortedPrefixSum) {
+                chunks++;
+            }
+        }
+        return chunks;
     }
 }
