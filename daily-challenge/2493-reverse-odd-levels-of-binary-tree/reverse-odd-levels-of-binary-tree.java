@@ -15,37 +15,21 @@
  */
 class Solution {
     public TreeNode reverseOddLevels(TreeNode root) {
-        Queue<TreeNode> q = new LinkedList<>();
-        HashMap<Integer, ArrayList<TreeNode>> levelWiseNodes = new HashMap<>();
-        int level = 0;
-        q.add(root);
-        while (!q.isEmpty()) {
-            int size = q.size();
-            while (size-- > 0) {
-                TreeNode cur = q.poll();
-                levelWiseNodes.putIfAbsent(level, new ArrayList<>());
-                levelWiseNodes.get(level).add(cur);
-                if (cur.left != null) {
-                    q.add(cur.left);
-                }
-                if (cur.right != null) {
-                    q.add(cur.right);
-                }
-            }
-            level++;
-        }
-        for (int curLevel = 1; curLevel < levelWiseNodes.size(); curLevel += 2) {
-            ArrayList<TreeNode> curLevelNodes = levelWiseNodes.getOrDefault(curLevel, new ArrayList<>());
-            int i = 0;
-            int j = curLevelNodes.size() - 1;
-            while (i < j) {
-                int temp = curLevelNodes.get(i).val;
-                curLevelNodes.get(i).val = curLevelNodes.get(j).val;
-                curLevelNodes.get(j).val = temp;
-                i++;
-                j--;
-            }
-        }
+        if (root == null)
+            return root;
+        helper(root.left, root.right, 1);
         return root;
+    }
+
+    public void helper(TreeNode root1, TreeNode root2, int level) {
+        if (root1 == null || root2 == null)
+            return;
+        if (level % 2 == 1) {
+            int temp = root1.val;
+            root1.val = root2.val;
+            root2.val = temp;
+        }
+        helper(root1.left, root2.right, level + 1);
+        helper(root1.right, root2.left, level + 1);
     }
 }
