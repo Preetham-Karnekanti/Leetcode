@@ -4,19 +4,19 @@ class Solution {
         int n = s.length();
         for (int i = 0; i < s.length(); i++)
             q.add(s.charAt(i));
-        for(int ops[]: shift){
+        for (int ops[] : shift) {
             int direction = ops[0];
             int k = ops[1] % n;
-            for(int i = 0;i<k;i++){
-                if(direction == 0){
+            for (int i = 0; i < k; i++) {
+                if (direction == 0) {
                     q.addLast(q.pollFirst());
-                }else{
+                } else {
                     q.addFirst(q.pollLast());
                 }
             }
         }
         StringBuilder sb = new StringBuilder();
-        while(!q.isEmpty()){
+        while (!q.isEmpty()) {
             sb.append(q.poll());
         }
         return sb.toString();
