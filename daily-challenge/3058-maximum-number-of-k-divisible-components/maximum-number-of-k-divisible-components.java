@@ -28,6 +28,7 @@ class Solution {
         }
         if (val % k == 0) {
             ans++;
+            val = 0;
         }
         return val;
     }
