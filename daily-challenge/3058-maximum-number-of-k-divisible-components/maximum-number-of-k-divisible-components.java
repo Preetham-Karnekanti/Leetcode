@@ -22,7 +22,6 @@ class Solution {
 
         for (int ngh : adj.get(node)) {
             if (!vis[ngh]) {
-                vis[ngh] = true;
                 val += dfs(adj, ngh, vis, k, values);
             }
         }
