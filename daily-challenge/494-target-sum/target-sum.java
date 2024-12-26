@@ -1,21 +1,23 @@
 class Solution {
-    HashMap<String, Integer> hm;
+    int totalSum;
 
     public int findTargetSumWays(int[] nums, int target) {
-        hm = new HashMap<>();
-        return helper(nums, 0, target);
+        totalSum = Arrays.stream(nums).sum();
+        int[][] memo = new int[nums.length][2 * totalSum + 1];
+        for (int[] row : memo) {
+            Arrays.fill(row, Integer.MIN_VALUE);
+        }
+        return helper(nums, 0, target, 0, memo);
     }
 
-    public int helper(int nums[], int idx, int target) {
-        String key = idx + ":" + target;
-        if (target == 0 && idx == nums.length)
+    public int helper(int nums[], int idx, int target, int currentSum, int dp[][]) {
+        if (target == currentSum && idx == nums.length)
             return 1;
         if (idx == nums.length)
             return 0;
-        if (hm.containsKey(key))
-            return hm.get(key);
-        int ways = helper(nums, idx + 1, target - nums[idx]) + helper(nums, idx + 1, target + nums[idx]);
-        hm.put(key, ways);
-        return ways;
+        if (dp[idx][currentSum + totalSum] != Integer.MIN_VALUE)
+            return dp[idx][currentSum + totalSum];
+        return dp[idx][currentSum + totalSum] = helper(nums, idx + 1, target, currentSum - nums[idx], dp)
+                + helper(nums, idx + 1, target, currentSum + nums[idx], dp);
     }
 }
