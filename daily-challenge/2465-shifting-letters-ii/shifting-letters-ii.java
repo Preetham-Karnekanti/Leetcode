@@ -30,19 +30,15 @@ class Solution {
                 continue;
             }
             int direction = netDiff < 0 ? BACKWARD : FORWARD;
-            char ch = getChar(s.charAt(i), Math.abs(netDiff), direction);
+            char ch = getChar(s.charAt(i), netDiff);
             sb.append(ch);
         }
 
         return sb.toString();
     }
 
-    public char getChar(char ch, int steps, int direction) {
+    public char getChar(char ch, int steps) {
         steps = steps % 26;
-        if (direction == BACKWARD) {
-            return (char) ('a' + (ch - 'a' - steps + 26) % 26);
-        } else {
-            return (char) ('a' + (ch - 'a' + steps) % 26);
-        }
+        return (char) ('a' + (ch - 'a' + steps + 26) % 26);
     }
 }
