@@ -4,11 +4,13 @@ class Solution {
         HashSet<String> hm = new HashSet<>();
         for (int i = 0; i < s.length(); i++) {
             int count[] = new int[10];
+            String temp = "";
             for (int j = i; j < s.length(); j++) {
                 count[s.charAt(j) - '0']++;
-                if (hasSame(count) && !hm.contains(s.substring(i, j + 1))) {
+                temp += s.charAt(j);
+                if (hasSame(count) && !hm.contains(temp)) {
                     ans++;
-                    hm.add(s.substring(i, j + 1));
+                    hm.add(temp);
                 }
             }
         }
