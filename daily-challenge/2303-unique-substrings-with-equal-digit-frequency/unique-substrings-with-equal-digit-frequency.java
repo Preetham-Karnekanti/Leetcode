@@ -4,13 +4,13 @@ class Solution {
         HashSet<String> hm = new HashSet<>();
         for (int i = 0; i < s.length(); i++) {
             int count[] = new int[10];
-            String temp = "";
+            StringBuilder temp = new StringBuilder();
             for (int j = i; j < s.length(); j++) {
                 count[s.charAt(j) - '0']++;
-                temp += s.charAt(j);
-                if (hasSame(count) && !hm.contains(temp)) {
+                temp.append(s.charAt(j));
+                if (hasSame(count) && !hm.contains(temp.toString())) {
                     ans++;
-                    hm.add(temp);
+                    hm.add(temp.toString());
                 }
             }
         }
