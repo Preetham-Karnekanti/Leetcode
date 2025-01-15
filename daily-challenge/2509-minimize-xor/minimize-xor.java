@@ -1,30 +1,39 @@
-public class Solution {
+import java.util.ArrayList;
+import java.util.Collections;
 
+class Solution {
     public int minimizeXor(int num1, int num2) {
+        int bitsInNum2 = countBits(num2);
         int result = 0;
 
-        int targetSetBitsCount = Integer.bitCount(num2);
-        int setBitsCount = 0;
-        int currentBit = 31; 
-        while (setBitsCount < targetSetBitsCount) {
-            if (
-                isSet(num1, currentBit) ||
-                (targetSetBitsCount - setBitsCount > currentBit)
-            ) {
-                result = setBit(result, currentBit);
-                setBitsCount++;
+        // Process bits of num1
+        for (int i = 31; i >= 0; i--) {
+            if ((num1 & (1 << i)) != 0) {
+                if (bitsInNum2 > 0) {
+                    result |= (1 << i);
+                    bitsInNum2--;
+                }
             }
-            currentBit--;
+        }
+
+        // Add remaining bits
+        for (int i = 0; i < 32 && bitsInNum2 > 0; i++) {
+            if ((result & (1 << i)) == 0) {
+                result |= (1 << i);
+                bitsInNum2--;
+            }
         }
 
         return result;
     }
 
-    private boolean isSet(int x, int bit) {
-        return (x & (1 << bit)) != 0;
-    }
-
-    private int setBit(int x, int bit) {
-        return x | (1 << bit);
+    // Helper function to count set bits in a number
+    public int countBits(int num) {
+        int count = 0;
+        while (num != 0) {
+            count += (num & 1);
+            num >>= 1;
+        }
+        return count;
     }
 }
