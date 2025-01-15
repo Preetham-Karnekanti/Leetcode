@@ -6,7 +6,6 @@ class Solution {
         int bitsInNum2 = countBits(num2);
         int result = 0;
 
-        // Process bits of num1
         for (int i = 31; i >= 0; i--) {
             if ((num1 & (1 << i)) != 0) {
                 if (bitsInNum2 > 0) {
@@ -16,7 +15,6 @@ class Solution {
             }
         }
 
-        // Add remaining bits
         for (int i = 0; i < 32 && bitsInNum2 > 0; i++) {
             if ((result & (1 << i)) == 0) {
                 result |= (1 << i);
@@ -27,7 +25,6 @@ class Solution {
         return result;
     }
 
-    // Helper function to count set bits in a number
     public int countBits(int num) {
         int count = 0;
         while (num != 0) {
