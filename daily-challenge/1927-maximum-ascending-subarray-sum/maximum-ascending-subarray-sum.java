@@ -1,16 +1,23 @@
-class Solution {
+public class Solution {
+
     public int maxAscendingSum(int[] nums) {
-        int i = 0;
-        int max = 0;
-        while(i < nums.length){
-            int sum = nums[i];
-            while(i < nums.length - 1 && nums[i] < nums[i + 1]){
-                sum += nums[i + 1];
-                i++;
+        int maxSum = 0;
+        int currentSubarraySum = nums[0];
+
+        // Loop through the array starting from the second element
+        for (int currentIdx = 1; currentIdx < nums.length; ++currentIdx) {
+            if (nums[currentIdx] <= nums[currentIdx - 1]) {
+                // If the current element is not greater than the previous one,
+                // update maxSum
+                maxSum = Math.max(maxSum, currentSubarraySum);
+                // Reset the sum for the next ascending subarray
+                currentSubarraySum = 0;
             }
-            i++;
-            max = Math.max(max, sum);
+            currentSubarraySum += nums[currentIdx];
         }
-        return max;
+
+        // Final check after the loop ends to account for the last ascending
+        // subarray
+        return Math.max(maxSum, currentSubarraySum);
     }
 }
