@@ -4,7 +4,7 @@ class Solution {
         Stack<Character> st = new Stack<>();
         for (int i = 0; i < s.length(); i++) {
             if (s.charAt(i) >= '0' && s.charAt(i) <= '9') {
-                if (st.isEmpty() == false && st.peek() >= 'a' && st.peek() <= 'z')
+                if (st.isEmpty() == false)
                     st.pop();
             } else {
                 st.push(s.charAt(i));
