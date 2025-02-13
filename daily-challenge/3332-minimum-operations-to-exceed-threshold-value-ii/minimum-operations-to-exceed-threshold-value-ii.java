@@ -5,7 +5,7 @@ class Solution {
             pq.add((long) i);
         }
         int ops = 0;
-        while (pq.size() >= 2 && pq.peek() < k) {
+        while (pq.peek() < k) {
             long a = pq.poll();
             long b = pq.poll();
             pq.add(a * 2 + b);
