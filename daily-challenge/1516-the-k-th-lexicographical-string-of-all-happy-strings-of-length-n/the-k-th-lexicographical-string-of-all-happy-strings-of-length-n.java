@@ -5,7 +5,6 @@ class Solution {
         answer = new ArrayList<>();
         char arr[] = new char[] { 'a', 'b', 'c' };
         solve(arr, 'z', "", n);
-        Collections.sort(answer);
         return answer.size() < k ? "" : answer.get(k - 1);
     }
 
