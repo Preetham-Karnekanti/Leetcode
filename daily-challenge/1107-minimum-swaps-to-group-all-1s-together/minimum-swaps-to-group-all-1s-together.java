@@ -1,23 +1,17 @@
 class Solution {
-    public int minSwaps(int[] data) {
-        int ans = Integer.MAX_VALUE;
-        int windowSize = 0;
-        for (int i : data) {
-            windowSize += i;
+    public int minSwaps(int[] arr) {
+        int total = 0;
+        for (int i = 0; i < arr.length; i++) {
+            total += arr[i];
         }
-
-        int zeroCount = 0;
-        int left = 0;
-        for (int i = 0; i < windowSize; i++) {
-            zeroCount += 1 - data[i];
+        int curr = 0, max = 0;
+        for (int i = 0; i < arr.length; i++) {
+            curr += arr[i] == 1 ? 1 : 0;
+            if (i >= total) {
+                curr -= arr[i - total] == 1 ? 1 : 0;
+            }
+            max = Math.max(max, curr);
         }
-        ans = Math.min(ans, zeroCount);
-        for (int right = windowSize; right < data.length; right++, left++) {
-            zeroCount -= (1 - data[left]);
-            zeroCount += (1 - data[right]);
-            ans = Math.min(ans, zeroCount);
-        }
-
-        return ans;
+        return total - max;
     }
 }
