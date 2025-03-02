@@ -13,12 +13,10 @@ class Solution {
         if (open < n) {
             ch[idx] = '(';
             solve(ans, ch, open + 1, close, n, idx + 1);
-            ch[idx] = '-';
         }
         if (close < open) {
             ch[idx] = ')';
             solve(ans, ch, open, close + 1, n, idx + 1);
-            ch[idx] = '-';
         }
     }
 }
