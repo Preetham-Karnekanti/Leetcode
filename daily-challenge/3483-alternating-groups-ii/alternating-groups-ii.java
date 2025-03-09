@@ -1,29 +1,37 @@
 class Solution {
+
     public int numberOfAlternatingGroups(int[] colors, int k) {
-        int arr[] = new int[colors.length + k - 1];
-        for (int i = 0; i < colors.length; i++) {
-            arr[i] = colors[i];
-        }
-
-        for (int i = 0; i < k - 1; i++) {
-            arr[colors.length + i] = arr[i];
-        }
-
+        int length = colors.length;
         int result = 0;
-        int left = 0;
-        int right = 1;
-        while (right < arr.length) {
-            if (arr[right] == arr[right - 1]) {
-                left = right;
-                right++;
+        int alternatingElementsCount = 1;
+        int lastColor = colors[0];
+
+        for (int index = 1; index < length; index++) {
+            if (colors[index] == colors[index - 1]) {
+                alternatingElementsCount = 1;
+                lastColor = colors[index];
                 continue;
             }
+            alternatingElementsCount++;
 
-            right++;
-            if (right - left < k)
-                continue;
-            result++;
-            left++;
+            if (alternatingElementsCount >= k) {
+                result++;
+            }
+
+            lastColor = colors[index];
+        }
+
+        for (int index = 0; index < k - 1; index++) {
+            if (colors[index] == lastColor)
+                break;
+
+            alternatingElementsCount++;
+
+            if (alternatingElementsCount >= k) {
+                result++;
+            }
+
+            lastColor = colors[index];
         }
         return result;
     }
