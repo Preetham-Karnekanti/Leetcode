@@ -1,12 +1,12 @@
 class Solution {
     public int maximumCandies(int[] candies, long k) {
-        long low = 1;
-        long high = 0;
-        long ans = 0;
+        int low = 1;
+        int high = 0;
+        int ans = 0;
         for (int i : candies)
             high = Math.max(high, i);
         while (low <= high) {
-            long mid = low + (high - low) / 2;
+            int mid = low + (high - low) / 2;
             if (isPossible(candies, mid, k)) {
                 ans = mid;
                 low = mid + 1;
@@ -14,10 +14,10 @@ class Solution {
                 high = mid - 1;
             }
         }
-        return (int)ans;
+        return ans;
     }
 
-    public boolean isPossible(int arr[], long perChild, long total) {
+    public boolean isPossible(int arr[], int perChild, long total) {
         long count = 0;
         for (int i : arr) {
             count += i / perChild;
