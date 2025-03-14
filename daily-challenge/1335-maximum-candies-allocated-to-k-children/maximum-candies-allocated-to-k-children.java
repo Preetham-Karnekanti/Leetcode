@@ -21,9 +21,7 @@ class Solution {
         long count = 0;
         for (int i : arr) {
             count += i / perChild;
-            if (count >= total)
-                return true;
         }
-        return false;
+        return count >= total;
     }
 }
