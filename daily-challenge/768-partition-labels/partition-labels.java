@@ -10,13 +10,11 @@ class Solution {
         while (i < n) {
             int right = lastOcc[s.charAt(i) - 'a'];
             int j = i;
-            int len = 1;
             while (j < right) {
                 right = Math.max(right, lastOcc[s.charAt(j) - 'a']);
                 j++;
-                len++;
             }
-            al.add(len);
+            al.add(j - i + 1);
             i = j + 1;
         }
         return al;
