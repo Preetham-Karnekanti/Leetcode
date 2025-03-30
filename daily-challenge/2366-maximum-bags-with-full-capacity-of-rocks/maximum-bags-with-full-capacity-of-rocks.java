@@ -1,23 +1,21 @@
 class Solution {
     public int maximumBags(int[] capacity, int[] rocks, int additionalRocks) {
-        PriorityQueue<Integer> pq = new PriorityQueue<>(
-                (a, b) -> Integer.compare(capacity[a] - rocks[a], capacity[b] - rocks[b]));
-        int count = 0;
-        for (int i = 0; i < capacity.length; i++){
-            int emptySpace = capacity[i] - rocks[i];
-            if(emptySpace == 0){
-                count++;
-                continue;
+        int n = capacity.length, fullBags = 0;
+        
+        int[] remainingCapacity = new int[n];
+        for (int i = 0; i < n; ++i)
+            remainingCapacity[i] = capacity[i] - rocks[i];
+        Arrays.sort(remainingCapacity);
+    
+        for (int i = 0; i < n; ++i) {
+            if (additionalRocks >= remainingCapacity[i]) {
+                additionalRocks -= remainingCapacity[i];
+                fullBags++;
             }
-            pq.add(i);
+            else
+                break;
         }
-        while(!pq.isEmpty() && additionalRocks > 0){
-            int topIdx = pq.poll();
-            int emptySpace = capacity[topIdx] - rocks[topIdx];
-            if(emptySpace <= additionalRocks)
-                count++;
-            additionalRocks -= emptySpace;
-        }
-        return count;
+        
+        return fullBags;
     }
 }
