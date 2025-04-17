@@ -1,15 +1,18 @@
 class Solution {
-
     public int countPairs(int[] nums, int k) {
-        int n = nums.length;
-        int res = 0; // number of pairs meeting the requirements
-        for (int i = 0; i < n - 1; ++i) {
-            for (int j = i + 1; j < n; ++j) {
-                if ((i * j) % k == 0 && nums[i] == nums[j]) {
-                    ++res;
-                }
-            }
-        }
-        return res;
+        return helper(nums,k,0);
     }
+
+private static int helper(int[] nums, int k, int i){
+    if(i>=nums.length){
+        return 0;
+    }
+    int count = 0;
+    for(int j=i+1;j<nums.length;j++){
+        if(nums[i]==nums[j] && (i*j)%k==0){
+            count++;
+        }
+    }
+    return count+helper(nums,k,i+1);
+  }
 }
