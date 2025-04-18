@@ -1,26 +1,32 @@
 class Solution {
     public String applySubstitutions(List<List<String>> replacements, String text) {
-        HashMap<String, String> hm = new HashMap<>();
+        String[] map = new String[26];
+
         for (int i = 0; i < replacements.size(); i++) {
-            String key = replacements.get(i).get(0);
-            String value = replacements.get(i).get(1);
-            hm.put(key, value);
+            map[replacements.get(i).getFirst().charAt(0) - 'A'] = replacements.get(i).getLast();
         }
 
-        return dfs(text, hm);
+        return helper(map, text);
     }
 
-    public String dfs(String text, HashMap<String, String> hm) {
-        if (!text.contains("%"))
-            return text;
-        String temp = "";
+    static String helper(String[] map, String text) {
+        StringBuilder sb = new StringBuilder();
         for (int i = 0; i < text.length(); i++) {
-            if ((text.charAt(i) >= 'a' && text.charAt(i) <= 'z') || text.charAt(i) == '_') {
-                temp += text.charAt(i);
-            } else if (text.charAt(i) >= 'A' && text.charAt(i) <= 'Z') {
-                temp += hm.get("" + text.charAt(i));
+            char c = text.charAt(i);
+            if (c == '%') {
+                char token = text.charAt(i + 1);
+                String mapped = map[token - 'A'];
+                while (mapped.contains("%")) {
+                    mapped = helper(map, mapped);
+                }
+                map[token - 'A'] = mapped;
+                sb.append(mapped);
+                i += 2;
+            } else {
+                sb.append(c);
             }
         }
-        return dfs(temp, hm);
+        return sb.toString();
     }
+
 }
