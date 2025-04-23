@@ -1,20 +1,18 @@
 class Solution {
     public int countLargestGroup(int n) {
+        int max = 0;
+        int ans = 0;
         int count[] = new int[37];
         for (int i = 1; i <= n; i++) {
             int sum = getSum(i);
             count[sum]++;
-        }
-        int max = 0;
-        int ans = 0;
-        for (int i = 0; i < count.length; i++) {
-            if (count[i] == max) {
-                ans++;
-            } else if (count[i] > max) {
+            if (count[sum] > max) {
                 ans = 1;
-                max = count[i];
-            }
+                max = count[sum];
+            } else if (count[sum] == max)
+                ans++;
         }
+
         return ans;
     }
 
