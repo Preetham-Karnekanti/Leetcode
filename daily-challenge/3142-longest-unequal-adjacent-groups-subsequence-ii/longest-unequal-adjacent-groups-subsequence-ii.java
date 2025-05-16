@@ -7,7 +7,7 @@ class Solution {
         int max = 1;
         for (int i = 0; i < words.length; i++) {
             dp[i] = 1;
-            hash[i] = -1;
+            hash[i] = i;
             for (int j = 0; j < i; j++) {
                 if (isAtOneDistance(words[i], words[j])
                         && groups[i] != groups[j]
@@ -22,9 +22,10 @@ class Solution {
             }
         }
         ArrayList<String> ans = new ArrayList<>();
-        while (idx != -1) {
-            ans.add(words[idx]);
+        ans.add(words[idx]);
+        while (idx != hash[idx]) {
             idx = hash[idx];
+            ans.add(words[idx]);
         }
         Collections.reverse(ans);
         return ans;
