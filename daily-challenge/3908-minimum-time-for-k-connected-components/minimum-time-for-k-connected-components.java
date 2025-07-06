@@ -1,7 +1,9 @@
 class Solution {
     public int minTime(int n, int[][] edges, int k) {
         int low = 0;
-        int high = (int) 1e9;
+        int high = 0;
+        for (int e[] : edges)
+            high = Math.max(high, e[2]);
         int ans = Integer.MAX_VALUE;
         while (low <= high) {
             int mid = low + (high - low) / 2;
