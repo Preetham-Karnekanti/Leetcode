@@ -1,14 +1,20 @@
 class Solution {
     public String makeFancyString(String s) {
         StringBuilder sb = new StringBuilder();
-        sb.append("AA");
-        for (int i = 0; i < s.length(); i++) {
-            char last = sb.charAt(sb.length() - 1);
-            char lastButOne = sb.charAt(sb.length() - 2);
-            if (s.charAt(i) == last && s.charAt(i) == lastButOne)
-                continue;
-            sb.append(s.charAt(i));
+        for (int i = 0; i < s.length();) {
+            char ch = s.charAt(i);
+            int count = 0;
+            while (i < s.length() && s.charAt(i) == ch) {
+                count++;
+                i++;
+            }
+            if (count >= 3)
+                count = 2;
+            if (count < 3) {
+                for (int j = 0; j < count; j++)
+                    sb.append(ch);
+            }
         }
-        return sb.toString().substring(2);
+        return sb.toString();
     }
 }
