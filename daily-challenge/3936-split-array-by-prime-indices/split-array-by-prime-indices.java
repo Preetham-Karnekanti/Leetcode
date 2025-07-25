@@ -1,9 +1,9 @@
 class Solution {
     public long splitArray(int[] nums) {
-        HashSet<Integer> primes = getPrimes(nums.length + 1);
+        boolean[] primes = getPrimes(nums.length + 1);
         long primeSum = 0, nonPrimeSum = 0;
         for (int i = 0; i < nums.length; i++) {
-            if (primes.contains(i)) {
+            if (primes[i]) {
                 primeSum += nums[i];
             } else
                 nonPrimeSum += nums[i];
@@ -11,7 +11,7 @@ class Solution {
         return Math.abs(primeSum - nonPrimeSum);
     }
 
-    public HashSet<Integer> getPrimes(int n) {
+    public boolean[] getPrimes(int n) {
         boolean isPrime[] = new boolean[n];
         Arrays.fill(isPrime, true);
         isPrime[0] = false;
@@ -22,11 +22,6 @@ class Solution {
                     isPrime[j] = false;
             }
         }
-        HashSet<Integer> hs = new HashSet<>();
-        for (int i = 0; i < isPrime.length; i++) {
-            if (isPrime[i])
-                hs.add(i);
-        }
-        return hs;
+        return isPrime;
     }
 }
