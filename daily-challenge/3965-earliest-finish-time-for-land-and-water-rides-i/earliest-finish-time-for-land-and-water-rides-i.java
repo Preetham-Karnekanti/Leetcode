@@ -11,12 +11,13 @@ class Solution {
         for (int i = 0; i < n; i++) {
             int end = landDuration[i] + landStartTime[i];
             for (int j = 0; j < m; j++) {
+                int wait;
                 if (waterStartTime[j] < end) {
-                    min = Math.min(min, end + waterDuration[j]);
+                    wait = 0;
                 } else {
-                    int wait = Math.abs(end - waterStartTime[j]);
-                    min = Math.min(min, wait + end + waterDuration[j]);
+                    wait = Math.abs(end - waterStartTime[j]);
                 }
+                min = Math.min(min, end + waterDuration[j] + wait);
             }
         }
         return min;
