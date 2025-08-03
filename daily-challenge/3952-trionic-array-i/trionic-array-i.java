@@ -14,7 +14,7 @@ class Solution {
                 break;
         }
 
-        if (i == tempIdx || i == nums.length - 1)
+        if (i == nums.length - 1)
             return false;
         tempIdx = i;
         for (;i < nums.length - 1; i++) {
