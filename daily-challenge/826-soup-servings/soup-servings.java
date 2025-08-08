@@ -1,13 +1,14 @@
 class Solution {
     public double soupServings(int n) {
+        if (n > 5000) return 1.0;
         int m = (int)Math.ceil(n / 25.0);
         Map<Integer, Map<Integer, Double>> dp = new HashMap<>();
 
-        for (int k = 1; k <= m; k++) {
-            if (calculateDP(k, k, dp) > 1 - 1e-5) {
-                return 1.0;
-            }
-        }
+        // for (int k = 1; k <= m; k++) {
+        //     if (calculateDP(k, k, dp) > 1 - 1e-5) {
+        //         return 1.0;
+        //     }
+        // }
         return calculateDP(m, m, dp);
     }
 
