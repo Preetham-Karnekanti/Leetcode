@@ -3,10 +3,11 @@ class Solution {
     int dp[][];
 
     public int numberOfWays(int n, int x) {
-        dp = new int[n + 1][n + 1];
+        int val = (int) Math.ceil(Math.pow(n, 1.0 / x));
+        dp = new int[n + 1][val + 1];
         for (int i[] : dp)
             Arrays.fill(i, -1);
-        return helper(n, x, (int) Math.ceil(Math.pow(n, 1.0 / x)));
+        return helper(n, x, val);
     }
 
     public int helper(int n, int x, int i) {
