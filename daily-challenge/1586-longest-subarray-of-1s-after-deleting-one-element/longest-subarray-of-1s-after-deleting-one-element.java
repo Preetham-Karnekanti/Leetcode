@@ -6,12 +6,9 @@ class Solution {
 
         int n = nums.length;
         for (int right = 0; right < n; right++) {
-            if (nums[right] == 0)
-                zeros++;
-
+            zeros += 1 - nums[right];
             while (zeros > 1) {
-                if (nums[left] == 0)
-                    zeros--;
+                zeros -= 1 - nums[left];
                 left++;
             }
             maxLen = Math.max(maxLen, right - left + 1);
