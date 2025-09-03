@@ -17,7 +17,6 @@ public class Solution {
                     pointB[1] < yMax
                 ) {
                     ans++;
-                    xMin = pointB[0];
                     yMin = pointB[1];
                 }
             }
