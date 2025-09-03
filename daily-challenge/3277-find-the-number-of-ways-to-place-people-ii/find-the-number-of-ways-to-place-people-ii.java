@@ -5,19 +5,13 @@ public class Solution {
         Arrays.sort(points, (a, b) -> a[0] != b[0] ? a[0] - b[0] : b[1] - a[1]);
         for (int i = 0; i < points.length - 1; i++) {
             int[] pointA = points[i];
-            int xMin = pointA[0] - 1;
-            int xMax = Integer.MAX_VALUE;
-            int yMin = Integer.MIN_VALUE;
-            int yMax = pointA[1] + 1;
-
+            int yi = pointA[1];
+            int y = Integer.MIN_VALUE;
             for (int j = i + 1; j < points.length; j++) {
-                int[] pointB = points[j];
-                if ( 
-                    pointB[1] > yMin &&
-                    pointB[1] < yMax
-                ) {
+                int yj = points[j][1];
+                if (yi >= yj && yj > y) {
+                    y = yj;
                     ans++;
-                    yMin = pointB[1];
                 }
             }
         }
