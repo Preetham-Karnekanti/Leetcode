@@ -27,13 +27,11 @@ class Solution {
 
     public String addA(String s, int a) {
         char ch[] = s.toCharArray();
-        for (int i = 0; i < ch.length; i++) {
-            if (i % 2 == 1) {
-                int num = ch[i] - 48;
-                num += a;
-                num = num % 10;
-                ch[i] = (char) (num + 48);
-            }
+        for (int i = 1; i < ch.length; i += 2) {
+            int num = ch[i] - 48;
+            num += a;
+            num = num % 10;
+            ch[i] = (char) (num + 48);
         }
         return new String(ch);
     }
