@@ -19,6 +19,8 @@ class Solution {
                     count += 2;
                     sum += (n / i) + i;
                 }
+                if (count > 4)
+                    return 0;
             }
         }
         return count == 4 ? sum : 0;
