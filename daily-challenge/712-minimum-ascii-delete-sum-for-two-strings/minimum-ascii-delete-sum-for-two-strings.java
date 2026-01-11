@@ -26,7 +26,6 @@ class Solution {
         if (s1.charAt(i) == s2.charAt(j))
             one = helper(s1, s2, i + 1, j + 1);
         else {
-            two = (int) s1.charAt(i) + (int) s2.charAt(j) + helper(s1, s2, i + 1, j + 1);
             two = Math.min(two, (int) s1.charAt(i) + helper(s1, s2, i + 1, j));
             two = Math.min(two, (int) s2.charAt(j) + helper(s1, s2, i, j + 1));
         }
