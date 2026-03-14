@@ -1,23 +1,34 @@
 class Solution {
-    ArrayList<String> answer;
 
     public String getHappyString(int n, int k) {
-        answer = new ArrayList<>();
-        char arr[] = new char[] { 'a', 'b', 'c' };
-        solve(arr, 'z', "", n);
-        return answer.size() < k ? "" : answer.get(k - 1);
-    }
 
-    public void solve(char arr[], char prev, String temp, int n) {
-        if (temp.length() == n) {
-            answer.add(temp);
-            return;
+        int total = 3 * (1 << (n - 1));
+        if (k > total) return "";
+
+        char[] chars = {'a','b','c'};
+        StringBuilder ans = new StringBuilder();
+
+        char prev = '#';
+
+        for (int i = 0; i < n; i++) {
+
+            int remaining = n - i - 1;
+            int block = 1 << remaining; // strings possible after choosing char
+
+            for (char c : chars) {
+
+                if (c == prev) continue;
+
+                if (k > block) {
+                    k -= block;
+                } else {
+                    ans.append(c);
+                    prev = c;
+                    break;
+                }
+            }
         }
 
-        for (int i = 0; i < arr.length; i++) {
-            if (prev == arr[i])
-                continue;
-            solve(arr, arr[i], temp + arr[i], n);
-        }
+        return ans.toString();
     }
 }
