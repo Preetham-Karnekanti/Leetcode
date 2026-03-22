@@ -4,7 +4,6 @@ class Solution {
 
         for (int k = 1; k <= 4; k++) {
             rotate(mat);
-            System.out.println("-------");
             if (isEqual(mat, target))
                 return true;
         }
@@ -19,7 +18,6 @@ class Solution {
                 mat[i][j] = mat[j][i];
                 mat[j][i] = temp;
             }
-            System.out.println(Arrays.toString(mat[i]));
         }
         int i = 0;
         int j = n - 1;
