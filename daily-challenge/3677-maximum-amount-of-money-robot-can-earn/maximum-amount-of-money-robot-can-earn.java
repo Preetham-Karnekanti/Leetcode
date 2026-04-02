@@ -17,18 +17,10 @@ class Solution {
         int max1 = Integer.MIN_VALUE;
         int max2 = Integer.MIN_VALUE;
         int max3 = Integer.MIN_VALUE;
-        if (coins[i][j] >= 0) {
-            max1 = coins[i][j] + Math.max(helper(coins, i + 1, j, neutral), helper(coins, i, j + 1, neutral));
-        } else {
-            if (neutral > 0) {
-                max2 = Math.max(helper(coins, i + 1, j, neutral - 1), helper(coins, i, j + 1, neutral - 1));
-                int max4 = Math.max(helper(coins, i + 1, j, neutral), helper(coins, i, j + 1, neutral)) + coins[i][j];
-                max2 = Math.max(max2, max4);
-            } else {
-                max3 = Math.max(helper(coins, i + 1, j, neutral), helper(coins, i, j + 1, neutral))
-                        - Math.abs(coins[i][j]);
-            }
+        max1 = coins[i][j] + Math.max(helper(coins, i + 1, j, neutral), helper(coins, i, j + 1, neutral));
+        if (neutral > 0 && coins[i][j] < 0) {
+            max2 = Math.max(helper(coins, i + 1, j, neutral - 1), helper(coins, i, j + 1, neutral - 1));
         }
-        return dp[i][j][neutral] = Math.max(max1, Math.max(max2, max3));
+        return dp[i][j][neutral] = Math.max(max1,max2);
     }
 }
