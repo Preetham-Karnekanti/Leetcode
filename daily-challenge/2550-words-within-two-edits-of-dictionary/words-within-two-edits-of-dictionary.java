@@ -16,11 +16,9 @@ class Solution {
 
 class Trie {
     Trie arr[];
-    boolean isEnd;
 
     Trie() {
         arr = new Trie[26];
-        isEnd = false;
     }
 
     void insert(Trie root, String word) {
