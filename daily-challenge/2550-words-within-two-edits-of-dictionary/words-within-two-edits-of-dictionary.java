@@ -30,14 +30,14 @@ class Trie {
                 root.arr[ch] = new Trie();
             root = root.arr[ch];
         }
-        root.isEnd = true;
+        // root.isEnd = true;
     }
 
     boolean search(Trie root, String word, int idx, int count) {
         if (count > 2 || root == null)
             return false;
         if (idx == word.length())
-            return count <= 2 && root.isEnd;
+            return count <= 2;
         int i = word.charAt(idx) - 'a';
         if (root.arr[i] != null) {
             if (search(root.arr[i], word, idx + 1, count))
