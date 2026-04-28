@@ -1,14 +1,14 @@
 class Solution {
     public int minOperations(int[][] grid, int x) {
-        int[] arr = new int[grid.length * grid[0].length];
-        int index = 0;
-        
-        for (int i = 0; i < grid.length; i++) {
-            for (int j = 0; j < grid[0].length; j++) {
-                arr[index++] = grid[i][j];
+        int m = grid.length;
+        int n = grid[0].length;
+        int arr[] = new int[m * n];
+        int idx = 0;
+        for (int i[] : grid) {
+            for (int j : i) {
+                arr[idx++] = j;
             }
         }
-        
         Arrays.sort(arr);
         int median = arr[(arr.length - 1) / 2];
         int steps = 0;
