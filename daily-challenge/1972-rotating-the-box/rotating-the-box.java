@@ -1,40 +1,33 @@
 class Solution {
-    public char[][] rotateTheBox(char[][] box) {
-        int m = box.length;
-        int n = box[0].length;
-        char[][] ans = new char[n][m];
-        for (int i = 0; i < m; i++) {
-            for (int j = 0; j < n; j++)
-                ans[j][i] = box[m - 1 - i][j];
+    public char[][] rotateTheBox(char[][] boxGrid) {
+        int n = boxGrid.length;
+        int m = boxGrid[0].length;
+        char[][] answer = new char[m][n];
+        for (int i = 0; i < n; i++) {
+            char temp[] = moveStones(boxGrid[i]);
+            for (int k = 0; k < temp.length; k++) {
+                answer[k][n - 1 - i] = temp[k];
+            }
         }
-        for (int i = 0; i < m; i++) {
-            moveStones(ans, i);
-        }
-
-        return ans;
+        return answer;
     }
 
-    public void moveStones(char ans[][], int col) {
-        char[] temp = new char[ans.length];
-        for (int i = 0; i < ans.length; i++) {
-            temp[i] = ans[i][col];
-        }
-        int i = temp.length - 1;
-        int j = i;
-        while (i >= 0) {
-            if (temp[i] == '*' || temp[i] == '#') {
-                if (temp[i] == '*') {
-                    j = i - 1;
-                } else {
-                    temp[i] = '.';
-                    temp[j] = '#';
-                    j--;
-                }
+    public char[] moveStones(char[] arr) {
+        int n = arr.length;
+        char[] temp = new char[n];
+        Arrays.fill(temp, '.');
+
+        int write = n - 1;
+
+        for (int i = n - 1; i >= 0; i--) {
+            if (arr[i] == '*') {
+                temp[i] = '*';
+                write = i - 1;
+            } else if (arr[i] == '#') {
+                temp[write--] = '#';
             }
-            i--;
         }
-        for (i = 0; i < ans.length; i++) {
-            ans[i][col] = temp[i];
-        }
+
+        return temp;
     }
 }
