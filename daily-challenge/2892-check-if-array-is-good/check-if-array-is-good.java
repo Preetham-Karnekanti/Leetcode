@@ -1,14 +1,19 @@
 class Solution {
+
     public boolean isGood(int[] nums) {
-        if (nums.length == 1)
-            return false;
         int n = nums.length;
-        Arrays.sort(nums);
-        if (n - 1 != nums[n - 1] || nums[n - 1] != nums[n - 2])
-            return false;
-        for (int i = 0; i < n - 1; i++) {
-            if (nums[i] != i + 1)
+        int[] count = new int[n];
+        for (int a : nums) {
+            if (a >= n) {
                 return false;
+            }
+            if (a < n - 1 && count[a] > 0) {
+                return false;
+            }
+            if (a == n - 1 && count[a] > 1) {
+                return false;
+            }
+            count[a]++;
         }
         return true;
     }
