@@ -2,10 +2,10 @@ class Solution {
     public int minJumps(int[] arr) {
         Queue<Integer> q = new LinkedList<>();
         q.add(0);
-        HashMap<Integer, ArrayList<Integer>> hm = new HashMap<>();
+        HashMap<Integer, Queue<Integer>> hm = new HashMap<>();
         boolean visited[] = new boolean[arr.length];
         for (int i = 0; i < arr.length; i++) {
-            hm.putIfAbsent(arr[i], new ArrayList<>());
+            hm.putIfAbsent(arr[i], new LinkedList<>());
             hm.get(arr[i]).add(i);
         }
         int steps = 0;
@@ -23,12 +23,14 @@ class Solution {
                     visited[cur - 1] = true;
                     q.add(cur - 1);
                 }
-                List<Integer> indices = hm.get(arr[cur]);
-                for (int i : indices) {
-                    if (!visited[i])
-                        q.add(i);
+                Queue<Integer> indices = hm.get(arr[cur]);
+                while (indices.size() > 0) {
+                    int ele = indices.poll();
+                    if (!visited[ele]) {
+                        q.add(ele);
+                        visited[ele] = true;
+                    }
                 }
-                indices.clear();
             }
             steps++;
         }
