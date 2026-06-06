@@ -9,7 +9,7 @@ class Solution {
             leftMax = Math.max(leftMax, height[left]);
             rightMax = Math.max(rightMax, height[right]);
             if (leftMax < rightMax) {
-                ans += Math.max(0, leftMax - height[left]);
+                ans += leftMax - height[left];
                 left++;
             } else {
                 ans += Math.max(0, rightMax - height[right]);
