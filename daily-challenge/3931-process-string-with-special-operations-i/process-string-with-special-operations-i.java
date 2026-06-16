@@ -7,7 +7,7 @@ class Solution {
                 if (sb.length() > 0)
                     sb.deleteCharAt(sb.length() - 1);
             } else if (ch == '#') {
-                sb.append(sb);
+                sb.append(sb.toString());
             } else if (ch == '%')
                 sb.reverse();
             else
