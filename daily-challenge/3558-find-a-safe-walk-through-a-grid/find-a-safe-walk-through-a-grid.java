@@ -3,7 +3,9 @@ class Solution {
         int n = grid.size();
         int m = grid.get(0).size();
         boolean vis[][][] = new boolean[n][m][health + 1];
-        Queue<int[]> q = new LinkedList<>();
+        PriorityQueue<int[]> q = new PriorityQueue<>((a,b) -> {
+            return a[2] - b[2];
+        });
         if (grid.get(0).get(0) == 1)
             health--;
         q.add(new int[] { 0, 0, health });
