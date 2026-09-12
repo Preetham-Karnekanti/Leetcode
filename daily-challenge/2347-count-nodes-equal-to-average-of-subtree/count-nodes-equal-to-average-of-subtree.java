@@ -34,7 +34,6 @@ class Solution {
         int rcount = right[1];
         int count = lcount + rcount + 1;
         int sum = lsum + rsum + root.val;
-        System.out.println(sum + " " + count);
         if (count > 0 && (sum / count) == root.val) {
             ans++;
         }
