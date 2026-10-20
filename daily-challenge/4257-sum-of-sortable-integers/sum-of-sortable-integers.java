@@ -40,28 +40,28 @@ class Solution {
     }
 
     private boolean check(int[] nums1, int[] nums2) {
-    int L = nums1.length;
-    int pivot = -1;
+        int L = nums1.length;
+        int pivot = -1;
 
-    for (int i = 0; i < L - 1; i++) {
-        if (nums1[i] > nums1[i + 1]) {
-            if (pivot != -1) {
+        for (int i = 0; i < L - 1; i++) {
+            if (nums1[i] > nums1[i + 1]) {
+                if (pivot != -1) {
+                    return false;
+                }
+                pivot = i + 1;
+            }
+        }
+
+        if (pivot == -1) {
+            return Arrays.equals(nums1, nums2);
+        }
+
+        for (int i = 0; i < L; i++) {
+            if (nums1[(pivot + i) % L] != nums2[i]) {
                 return false;
             }
-            pivot = i + 1;
         }
-    }
 
-    if (pivot == -1) {
-        return Arrays.equals(nums1, nums2);
+        return true;
     }
-
-    for (int i = 0; i < L; i++) {
-        if (nums1[(pivot + i) % L] != nums2[i]) {
-            return false;
-        }
-    }
-
-    return true;
-}
 }
