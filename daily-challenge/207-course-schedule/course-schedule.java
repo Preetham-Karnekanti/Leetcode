@@ -8,8 +8,8 @@ class Solution {
         for (int e[] : prerequisites) {
             int u = e[0];
             int v = e[1];
-            graph.get(v).add(u);
-            indegree[u]++;
+            graph.get(u).add(v);
+            indegree[v]++;
         }
         int count = 0;
         Queue<Integer> q = new LinkedList<>();
