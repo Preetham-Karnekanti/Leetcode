@@ -6,12 +6,10 @@ class Solution {
         int bobDeparture = calculateNofdaysPassed(leaveBob);
 
         int count = 0;
-        for (int i = aliceArrival; i <= aliceDeparture; i++) {
-            if (i >= bobArrival && i <= bobDeparture)
-                count++;
-        }
+        int start = Math.max(aliceArrival, bobArrival);
+        int end = Math.min(aliceDeparture, bobDeparture);
 
-        return count;
+        return Math.max(0, end - start + 1);
     }
 
     public int calculateNofdaysPassed(String date) {
