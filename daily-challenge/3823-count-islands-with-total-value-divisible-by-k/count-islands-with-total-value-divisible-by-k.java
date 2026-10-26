@@ -1,15 +1,10 @@
 class Solution {
-    int dx[] = new int[] { -1, 1, 0, 0 };
-    int dy[] = new int[] { 0, 0, -1, 1 };
-
     public int countIslands(int[][] grid, int k) {
-        int m = grid.length;
-        int n = grid[0].length;
         int ans = 0;
-        for (int i = 0; i < m; i++) {
-            for (int j = 0; j < n; j++) {
+        for (int i = 0; i < grid.length; i++) {
+            for (int j = 0; j < grid[0].length; j++) {
                 if (grid[i][j] != 0) {
-                    int sum = dfs(grid, i, j, m, n);
+                    long sum = bfs(grid, i, j);
                     if (sum % k == 0)
                         ans++;
                 }
@@ -18,22 +13,27 @@ class Solution {
         return ans;
     }
 
-    public int dfs(int grid[][], int r, int c, int m, int n) {
-        int sum = grid[r][c];
-        grid[r][c] = 0;
-        for (int i = 0; i < 4; i++) {
-            int nr = r + dx[i];
-            int nc = c + dy[i];
-            if (!isValid(nr, nc, m, n) || grid[nr][nc] == 0)
-                continue;
-            sum += dfs(grid, nr, nc, m, n);
+    public long bfs(int grid[][], int row, int col) {
+        Queue<int[]> q = new LinkedList<>();
+        int dr[] = new int[] { -1, 1, 0, 0 };
+        int dc[] = new int[] { 0, 0, -1, 1 };
+        long sum = grid[row][col];
+        q.add(new int[] { row, col });
+        grid[row][col] = 0;
+        while (!q.isEmpty()) {
+            int cur[] = q.poll();
+            int r = cur[0];
+            int c = cur[1];
+            for (int i = 0; i < 4; i++) {
+                int nr = r + dr[i];
+                int nc = c + dc[i];
+                if (nr < 0 || nc < 0 || nr >= grid.length || nc >= grid[0].length || grid[nr][nc] == 0)
+                    continue;
+                sum += grid[nr][nc];
+                grid[nr][nc] = 0;
+                q.add(new int[] { nr, nc });
+            }
         }
         return sum;
-    }
-
-    public boolean isValid(int r, int c, int m, int n) {
-        if (r < 0 || c < 0 || r >= m || c >= n)
-            return false;
-        return true;
     }
 }
