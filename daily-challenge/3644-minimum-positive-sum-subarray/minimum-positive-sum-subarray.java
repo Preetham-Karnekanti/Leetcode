@@ -6,6 +6,8 @@ class Solution {
             for (int j = i; j < nums.size(); j++) {
                 sum += nums.get(j);
                 int size = j - i + 1;
+                if(size > r)
+                    break;
                 if (l <= size && size <= r && sum > 0){
                     min = Math.min(min, sum);
                 }
